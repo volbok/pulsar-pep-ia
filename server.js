@@ -35,7 +35,7 @@ app.post("/doia", async (req, res) => {
             ` Você é um assistente médico especializado em declaração de óbito do Brasil.
             A partir da descrição clínica fornecida, gere a cadeia de eventos para preenchimento da Declaração de Óbito brasileira. Siga estritamente o formato JSON e as normas do Ministério da Saúde.
             ### Descrição fornecida:
-            ${descricao}
+            ${texto}
             
             ### Regras:
             1. Produza apenas JSON, sem texto fora do JSON.
