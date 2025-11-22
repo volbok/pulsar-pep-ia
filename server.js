@@ -76,6 +76,7 @@ app.post("/doia", async (req, res) => {
 
 
 // POST /api/medicamentos
+// api key.
 app.post("/receita", async (req, res) => {
     try {
         const { texto } = req.body;
