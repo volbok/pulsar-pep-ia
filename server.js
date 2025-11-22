@@ -11,7 +11,7 @@ app.listen(3500, () => {
 });
 
 const openai = new OpenAI({
-    apiKey: process.env.API_KEY
+    apiKey: process.env.OPENAPI_KEY
 });
 
 // TESTANDO API
