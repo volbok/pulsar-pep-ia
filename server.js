@@ -22,6 +22,59 @@ app.get("/", (request, response) => {
     });
 });
 
+// assistente de Declaração de Óbito.
+app.post("/doia", async (req, res) => {
+    try {
+        const { texto } = req.body;
+
+        if (!texto) {
+            return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+        }
+
+        const prompt =
+            ` Você é um assistente médico especializado em declaração de óbito do Brasil.
+            A partir da descrição clínica fornecida, gere a cadeia de eventos para preenchimento da Declaração de Óbito brasileira. Siga estritamente o formato JSON e as normas do Ministério da Saúde.
+            ### Descrição fornecida:
+            ${descricao}
+            
+            ### Regras:
+            1. Produza apenas JSON, sem texto fora do JSON.
+            2. A cadeia causal deve ir da causa imediata (linha a) até a causa básica (linha d).
+            3. Use no máximo 4 linhas na Parte I.
+            4. Parte II deve conter apenas condições que contribuíram.
+            5. Não use “parada cardiorrespiratória” ou “insuficiência respiratória” como causa básica.
+            6. Não invente dados não informados.
+            7. Preencha sempre a causa_basica.
+            8. Estrutura JSON obrigatória:
+            {
+            "parte_I": {
+            "a": "",
+            "b": "",
+            "c": "",
+            "d": ""
+            },
+            "parte_II": [],
+            "causa_basica": ""
+            }
+            Retorne SOMENTE o JSON.
+            `
+
+        const completion = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [{ role: "user", content: prompt }],
+            response_format: { type: "json_object" },
+        });
+
+        const resposta = completion.choices[0].message.content;
+
+        res.json(JSON.parse(resposta));
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao processar solicitação." });
+    }
+});
+
+
 // POST /api/medicamentos
 app.post("/receita", async (req, res) => {
     try {
