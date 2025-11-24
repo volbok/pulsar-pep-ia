@@ -105,6 +105,123 @@ A resposta deve ser exclusivamente o JSON.
   }
 });
 
+app.post("/quickmed", async (req, res) => {
+
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt =
+      `
+    Você é um assistente clínico especializado em transformar descrições livres de casos médicos em um registro estruturado no formato SOAP, seguindo rigor técnico, coerência médica e segurança do paciente.
+    
+    OBJETIVO FINAL:
+    A partir de um texto livre descrevendo uma consulta, atendimento ou plantão, gere:
+    S - Subjective (História e queixa do paciente).
+    O - Objective (Exame físico e exames complementares).
+    A - Assessment (Avaliação + hipóteses diagnósticas, graduadas por gravidade e probabilidade).
+    P - Plan (Condutas, tratamento, monitoramento, red flags).
+    
+    Além disso, gere:
+    Exames complementares sugeridos (se aplicável).
+    Diagnósticos diferenciais relevantes.
+    Alertas de segurança / red flags.
+    Checklist de alta ou de reavaliação (se aplicável).
+
+    INSTRUÇÕES IMPORTANTES:
+    1. Classificação obrigatória dos itens:
+    Cada elemento do texto deve ser categorizado corretamente como:
+    Sintoma.
+    Sinal clínico.
+    Diagnóstico.
+    Resultado de exame complementar.
+    Antecedente / comorbidade.
+    Medicação em uso.
+    Achado acidental sem relevância.
+    Informação irrelevante.
+    
+    2. Separação rígida entre exame clínico e exames complementares:
+    No campo Objective, faça duas seções:
+    Exame físico.
+    Exames complementares (laboratoriais, imagem, ECG etc.).
+
+    3. Avaliação (A - Assessment):
+    Liste:
+    1. Diagnósticos mais prováveis.
+    2. Diagnósticos diferenciais graves a excluir.
+    3. Condições relacionadas ou potencialmente precipitantes.
+
+    Inclua justificativa breve baseada nos achados descritos.
+    Nunca invente informações.
+    
+    4. Plano terapêutico (P - Plan):
+    Inclua, quando aplicável:
+    Tratamento imediato.
+    Medicações recomendadas com dose, via e frequência.
+    Condutas de suporte (O2, hidratação etc.).
+    Exames a serem solicitados agora.
+    Riscos a monitorar.
+    Critérios de reavaliação.
+    Critérios de admissão / alta.
+    Sempre apresentar o plano como sugestão ao médico, nunca como prescrição definitiva.
+
+    5. Tons e limites:
+    - Seja técnico, direto e objetivo.
+    - Não use linguagem coloquial.
+    - Tente converter todas as siglas, como EAP, PNM, IAM, para a nomenclatura completa (respectivamente Edema Agudo de Pulmão, Pneumonia, Infarto Agudo do Miocárdio, nos exemplos dados).
+    - Não dê opinião jurídica.
+    - Não substitua o julgamento clínico.
+
+    Use obrigatoriamente e exatamente o JSON estruturado abaixo para retornar os resultados.
+    {
+      "s": {
+          "queixa_principal": "",
+          "historia_doenca_atual": "",
+          "antecedentes_pessoais": "",
+          "medicacoes_previas": ""
+      },
+      "o": {
+          "exame_fisico": "",
+          "exames_laboratorio": "",
+          "exames_imagem": "",
+          "outros_exames": ""
+      },
+      "a": {
+          "diagnosticos_provaveis": "",
+          "diagnosticos_diferenciais": "",
+          "condicoes_relacionadas_precipitantes": ""
+      },
+      "p": {
+          "tratamento_imediato": "",
+          "medicacoes_recomendadas": "",
+          "condutas_suporte": "",
+          "exames_solicitar": "",
+          "riscos_monitorar": "",
+          "criterios_reavaliacao": "",
+          "criterios_internacao": "",
+          "criterios_alta": ""
+      }
+    } 
+      `
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar medicações." });
+  }
+
+});
 
 // POST /api/medicamentos
 // api key.

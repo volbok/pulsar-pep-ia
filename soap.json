@@ -1,0 +1,29 @@
+{
+    "s": {
+        "queixa_principal": "",
+        "historia_doenca_atual": "",
+        "antecedentes_pessoais": "",
+        "medicacoes_previas": ""
+    },
+    "o": {
+        "exame_fisico": "",
+        "exames_laboratorio": "",
+        "exames_imagem": "",
+        "outros_exames": ""
+    },
+    "a": {
+        "diagnosticos_provaveis": "",
+        "diagnosticos_diferenciais": "",
+        "condicoes_relacionadas_precipitantes": ""
+    },
+    "p": {
+        "tratamento_imediato": "",
+        "medicacoes_recomendadas": "",
+        "condutas_suporte": "",
+        "exames_solicitar": "",
+        "riscos_monitorar": "",
+        "criterios_reavaliacao": "",
+        "criterios_internacao": "",
+        "criterios_alta": ""
+    }
+}
