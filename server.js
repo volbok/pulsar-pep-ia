@@ -222,9 +222,7 @@ app.post("/quickmed", async (req, res) => {
           "criterios_internacao": "",
           "criterios_alta": ""
       },
-      "evolucao: {
-
-      }
+      "evolucao: {""}
     } 
       `
 
