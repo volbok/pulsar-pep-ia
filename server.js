@@ -6,7 +6,7 @@ import cors from "cors";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.listen(3500, () => {
+app.listen(3550, () => {
   console.log("Servidor rodando na porta 3500");
 });
 
@@ -109,7 +109,6 @@ app.post("/quickmed", async (req, res) => {
 
   try {
     const { texto, modelo } = req.body;
-    console.log(req.body);
 
     if (!texto) {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
@@ -153,6 +152,10 @@ app.post("/quickmed", async (req, res) => {
     * HÍSTÓRIA E QUEIXA DO PACIENTE (S - Subjective):
     Procure escrever a história da doença atual de forma mais detalhada, indicando o tempo de início do quadro atual (se
     indisponível, não invente), bem como os sinais e sintomas apresentados.
+    
+    Se disponíveis, apenas coloque os resultados de exames laboratoriais no campo "s", sem fazer interpretação dos mesmos ou traduzi-los textualmente.
+    A interpretação dos resultados dos exames laboratoriais deve ser usada para avaliar o quadro clínico e ajudar na proposição dos
+    diagnósticos e condutas.
 
     * AVALIAÇÃO (A - Assessment):
     a. Diagnósticos mais prováveis.
@@ -192,9 +195,17 @@ app.post("/quickmed", async (req, res) => {
   
     * FORMATO DE SAÍDA:
     Use o JSON a seguir para retornar as informações levantadas e os resultados processados.
-    No campo "evolução" do JSON, adapte todas as informações processadas ao modelo de evolução contextualizado em ${modelo}.
-    Este modelo traz formas personalizadas de arranjar as informações do SOAP, permitindo que o usuário médico crie evoluções
-    personalizadas.
+    
+    O campo "evolucao" deve ser um array de strings, cada string representando um tópico identificado em ${modelo}.
+    Não coloque tudo em uma única string.
+    Se o usuário colocou algum caractere especial (#, >>, bullet, etc.), antes de cada
+    tópico, favor manter.
+    Exemplo:
+    [
+    "# Hipóteses diagnósticas: texto"
+    "# Antecedentes pessoais: "texto."
+    ]
+
     {
       "s": {
           "queixa_principal": "",
@@ -223,7 +234,7 @@ app.post("/quickmed", async (req, res) => {
           "criterios_internacao": "",
           "criterios_alta": ""
       },
-      "evolucao: ""
+      "evolucao: []
     } 
       `
 
