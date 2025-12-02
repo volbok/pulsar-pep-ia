@@ -16,7 +16,7 @@ const openai = new OpenAI({
 
 // TESTANDO API
 app.get("/", (request, response) => {
-  console.log('API FOI CHAMADA.')
+  console.log('API FOI CHAMADA.');
   response.json({
     info: "API para receitas médicas criadas pelo Chat GPT.",
   });
@@ -108,7 +108,7 @@ A resposta deve ser exclusivamente o JSON.
 app.post("/quickmed", async (req, res) => {
 
   try {
-    const { texto } = req.body;
+    const { texto, modelo } = req.body;
 
     if (!texto) {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
@@ -189,9 +189,11 @@ app.post("/quickmed", async (req, res) => {
     Em pediatria, só utilize doses padrão comprovadas.
     Não conclua diagnósticos que dependam exclusivamente de exames não fornecidos.
   
-
     * FORMATO DE SAÍDA:
     Use o JSON a seguir para retornar as informações levantadas e os resultados processados.
+    No campo "evolução" do JSON, adapte todas as informações processadas ao modelo de evolução contextualizado em ${modelo}.
+    Este modelo traz formas personalizadas de arranjar as informações do SOAP, permitindo que o usuário médico crie evoluções
+    personalizadas.
     {
       "s": {
           "queixa_principal": "",
@@ -219,6 +221,9 @@ app.post("/quickmed", async (req, res) => {
           "criterios_reavaliacao": "",
           "criterios_internacao": "",
           "criterios_alta": ""
+      },
+      "evolucao: {
+
       }
     } 
       `
