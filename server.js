@@ -151,8 +151,8 @@ app.post("/quickmed", async (req, res) => {
 
     3. Avaliação (A - Assessment):
     Liste:
-    1. Diagnósticos mais prováveis.
-    2. Diagnósticos diferenciais graves a excluir.
+    1. Diagnósticos mais prováveis. Seja direto, enumerando os diagnósticos, sem muito texto ou explicações genéricas.
+    2. Diagnósticos diferenciais graves a excluir. Seja direto, listando os diagnósticos diferenciais sem textos ou explicações genéricas.
     3. Condições relacionadas ou potencialmente precipitantes.
 
     Inclua justificativa breve baseada nos achados descritos.
