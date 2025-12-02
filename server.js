@@ -109,6 +109,7 @@ app.post("/quickmed", async (req, res) => {
 
   try {
     const { texto, modelo } = req.body;
+    console.log(req.body);
 
     if (!texto) {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
