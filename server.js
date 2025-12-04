@@ -105,6 +105,7 @@ A resposta deve ser exclusivamente o JSON.
   }
 });
 
+// evolução melhorada.
 app.post("/quickmed", async (req, res) => {
 
   try {
@@ -195,16 +196,6 @@ app.post("/quickmed", async (req, res) => {
   
     * FORMATO DE SAÍDA:
     Use o JSON a seguir para retornar as informações levantadas e os resultados processados.
-    
-    O campo "evolucao" deve ser um array de strings, cada string representando um tópico identificado em ${modelo}.
-    Não coloque tudo em uma única string.
-    Se o usuário colocou algum caractere especial (#, >>, bullet, etc.), antes de cada
-    tópico, favor manter.
-    Exemplo:
-    [
-    "# Hipóteses diagnósticas: texto"
-    "# Antecedentes pessoais: "texto."
-    ]
 
     {
       "s": {
@@ -234,7 +225,6 @@ app.post("/quickmed", async (req, res) => {
           "criterios_internacao": "",
           "criterios_alta": ""
       },
-      "evolucao: []
     } 
       `
 
@@ -249,7 +239,39 @@ app.post("/quickmed", async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Erro ao processar medicações." });
+    res.status(500).json({ error: "Erro ao processar a evolução." });
+  }
+
+});
+
+// evolução melhorada trabalhada com o modelo do cliente.
+app.post("/quickmedplus", async (req, res) => {
+
+  try {
+    const { texto, modelo } = req.body;
+
+    if (!modelo) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt =
+      `
+    Reescreva a evolução médica obtida de ${texto}, obedecendo as instruções e tópicos/partes da evolução presentes em ${modelo}.
+    A resposta deve ser uma array, onde cada parte da evolução será um objeto string.
+      `
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar a evolução com o modelo selecionado." });
   }
 
 });
