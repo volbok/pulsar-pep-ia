@@ -271,7 +271,7 @@ app.post("/quickmedplus", async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Erro ao processar a evolução com o modelo selecionado." });
+    res.status(500).json({ error: "Erro ao processar a evolução com o modelo selecionado. " + error });
   }
 
 });
