@@ -109,7 +109,7 @@ A resposta deve ser exclusivamente o JSON.
 app.post("/quickmed", async (req, res) => {
 
   try {
-    const { texto, modelo } = req.body;
+    const { texto } = req.body;
 
     if (!texto) {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
