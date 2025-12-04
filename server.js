@@ -254,6 +254,8 @@ app.post("/quickmedplus", async (req, res) => {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
     }
 
+    console.log(texto);
+
     const prompt =
       `
     Reescreva a evolução médica obtida do JSON ${texto}, obedecendo as instruções e tópicos/partes da evolução presentes em ${modelo}.
