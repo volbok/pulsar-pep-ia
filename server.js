@@ -256,7 +256,7 @@ app.post("/quickmedplus", async (req, res) => {
 
     const prompt =
       `
-    Reescreva a evolução médica obtida de ${texto}, obedecendo as instruções e tópicos/partes da evolução presentes em ${modelo}.
+    Reescreva a evolução médica obtida de ${JSON.stringify(texto)}, obedecendo as instruções e tópicos/partes da evolução presentes em ${modelo}.
     A resposta deve ser uma array, onde cada parte da evolução será um objeto string.
       `
 
