@@ -257,7 +257,7 @@ app.post("/quickmedplus", async (req, res) => {
     const prompt =
       `
     Reescreva a evolução médica obtida de ${texto}, obedecendo as instruções e tópicos/partes da evolução presentes em ${modelo}.
-    A resposta deve ser um json, onde cada campo da evolução será um objeto string.
+    A resposta deve ser um array, onde cada campo da evolução será uma string.
       `
 
     const completion = await openai.chat.completions.create({
