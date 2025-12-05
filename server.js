@@ -254,12 +254,10 @@ app.post("/quickmedplus", async (req, res) => {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
     }
 
-    console.log(texto);
-
     const prompt =
       `
     Reescreva a evolução médica obtida de ${texto}, obedecendo as instruções e tópicos/partes da evolução presentes em ${modelo}.
-    A resposta deve ser uma array, onde cada parte da evolução será um objeto string.
+    A resposta deve ser um json, onde cada campo da evolução será um objeto string.
       `
 
     const completion = await openai.chat.completions.create({
