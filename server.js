@@ -55,12 +55,13 @@ Se não tem certeza, não liste o diagnóstico.
 Verifique também se existem diagnósticos etiológicos ou nosológicos semelhantes (códigos CID parecidos) e exclua o menos específico.
 
 Não é necessário preencher todas as linhas da parte I, liste apenas os diagnósticos de maior probabilidade. A parte I aceita
-no máximo 4 linhas.
+no máximo 4 linhas. Classifique cada item com as letras do alfabeto (a, b, c e d), tal como feito na Declaração de Óbito real.
 
 Reserve para a parte II as doenças crônicas, que geralmente já foram lançadas pelo usuário, ou para causas agudas, contribuidoras
 para a morte, mas que não se enquadram adequadamente na cadeia causal direta da morte.
 
 Não use causas como "insuficiência respiratória", "parada cardiorrespiratória" ou "falência múltipla de órgãos".
+Não use sintomas ou sinais clínicos, como tosse, hipotensão, febre.
 
 Ao listar cada item, associe-o ao CID-10.
 
@@ -78,8 +79,9 @@ Retorne apenas o JSON, exatamente neste formato:
 
     "parteI": [
         {
-            "item": "",
-            "cid10": "",
+          "letra",    
+          "item": "",
+          "cid10": "",
         },
     "parteII": [
         {
@@ -193,6 +195,8 @@ app.post("/quickmed", async (req, res) => {
     Medicações sempre devem estar em forma de sugestão.
     Em pediatria, só utilize doses padrão comprovadas.
     Não conclua diagnósticos que dependam exclusivamente de exames não fornecidos.
+    Cuidado ao classificar doenças infecciosas como bacterianas ou virais. Tenha certeza de definir se uma doença
+    é bacteriana ou viral antes de informar.
   
     * FORMATO DE SAÍDA:
     Use o JSON a seguir para retornar as informações levantadas e os resultados processados.
@@ -256,8 +260,33 @@ app.post("/quickmedplus", async (req, res) => {
 
     const prompt =
       `
-    Reescreva a evolução médica utilizando o JSON de entrada ${texto}, obedecendo as instruções e tópicos/partes da evolução presentes em ${modelo}.
-    A resposta deve ser um array, onde cada campo da evolução será uma string.
+        IMPORTANTE — LEIA COMPLETAMENTE ANTES DE GERAR A RESPOSTA.
+
+        1. Você receberá um JSON de entrada chamado "texto". Esse JSON contém informações clínicas estruturadas no método SOAP.
+        2. Você também receberá uma string chamada "modelo", que lista os tópicos da evolução.
+        3. Primeiro, avalie cada tópico da string "modelo" e busque uma correspondência com os objetos do JSON "texto".
+        4. Uma vez estabelecidas as correspondências, monte uma nova array com objetos assim definidos:
+        {topico: "tópico indicado na string "modelo, incluindo caracteres especiais, se presentes (hash, setas, bullets)", conteudo: conteúdo correspondente do JSON "texto"}
+        5. Em seguida, adicione cada objeto criado na array evolucao, conforme mostrado no JSON a seguir:
+          
+          {
+            "evolucao": [
+              { "topico": "...", "conteudo": "..." },
+              { "topico": "...", "conteudo": "..." }
+            ]
+          }
+
+        6. Nunca inclua comentários, explicações, texto extra ou qualquer coisa fora do JSON final.
+        7. Para tópicos que definem diagnósticos e condutas, evite textos longos, justificativas e explicações, apenas liste as respostas.
+
+        AGORA, UTILIZE APENAS AS INFORMAÇÕES A SEGUIR:
+
+        JSON DE ENTRADA (texto):
+        ${JSON.stringify(texto)}
+
+        MODELO DE EVOLUÇÃO (modelo):
+        ${modelo}
+
       `
 
     const completion = await openai.chat.completions.create({
