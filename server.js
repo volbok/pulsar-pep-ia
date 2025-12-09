@@ -278,10 +278,21 @@ app.post("/quickmedplus", async (req, res) => {
 
         1. Você receberá um JSON de entrada chamado "texto". Esse JSON contém informações clínicas estruturadas no método SOAP.
         2. Você também receberá uma string chamada "modelo", que lista os tópicos da evolução.
-        3. Primeiro, avalie cada tópico da string "modelo" e busque uma correspondência com os objetos do JSON "texto".
-        4. Uma vez estabelecidas as correspondências, monte uma nova array com objetos assim definidos:
+        3. Primeiramente, procure substituir siglas e abreviações de termos médicos encontrados na string "modelo". Abaixo tem uma lista
+        de siglas e abreviações que precisam ser substituidas por expressões completas:
+        ACV: aparelho cardiovascular;
+        RR 2T ou RCR 2T = ritmo cardíaco regular, em 2 tempos;
+        RCI = ritmo cardíaco irregular;
+        BNF = bulhas normofonéticas;
+        AP = apareho pulmonar;
+        MV = murmúrio vesicular;
+        MVF = murmúrio vesicular fisiológico;
+        SRA = sem ruídos adventícios.
+        MUC= medicações de uso contínuo.
+        4. Siga todas as instruções da string "modelo" e busque preencher o que é solicitado com as informações correspondentes no JSON "texto".
+        5. Uma vez estabelecidas as correspondências, monte uma nova array com objetos assim definidos:
         {topico: "tópico indicado na string "modelo, incluindo caracteres especiais, se presentes (hash, setas, bullets)", conteudo: conteúdo correspondente do JSON "texto"}
-        5. Em seguida, adicione cada objeto criado na array evolucao, conforme mostrado no JSON a seguir:
+        6. Em seguida, adicione cada objeto criado na array evolucao, conforme mostrado no JSON a seguir:
           
           {
             "evolucao": [
@@ -290,8 +301,8 @@ app.post("/quickmedplus", async (req, res) => {
             ]
           }
 
-        6. Nunca inclua comentários, explicações, texto extra ou qualquer coisa fora do JSON final.
-        7. Para tópicos que definem diagnósticos e condutas, evite textos longos, justificativas e explicações, apenas liste as respostas.
+        7. Nunca inclua comentários, explicações, texto extra ou qualquer coisa fora do JSON final.
+        8. Para tópicos que definem diagnósticos e condutas, evite textos longos, justificativas e explicações, apenas liste as respostas.
 
         AGORA, UTILIZE APENAS AS INFORMAÇÕES A SEGUIR:
 
