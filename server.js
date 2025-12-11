@@ -67,7 +67,7 @@ app.post("/doia", async (req, res) => {
       no máximo 4 linhas. Classifique cada item da parte I com as letras do alfabeto (a, b, c e d), tal como feito na Declaração
       de Óbito real.
 
-      Reserve para a parte II itens que representam diagnósticos de doenças crônicas (menor peso) e antecedentes pessoais
+      Reserve para a parte II itens que representam diagnósticos de doenças e antecedentes pessoais
       contribuidores para a morte, mas que não se enquadram adequadamente na cadeia causal direta da morte (parte I). Não inclua
       itens que não têm relação com a morte.
 
