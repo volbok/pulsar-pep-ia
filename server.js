@@ -61,13 +61,14 @@ app.post("/doia", async (req, res) => {
       identifique e descreva a DOENÇA ou EVENTO ETIOLÓGICO responsável.
     6. Não inclua fatores de risco isolados (ex: obesidade, hipertensão, diabetes)
       na Parte I, a menos que sejam diretamente responsáveis pela morte.
-    7. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
+    7. Não inclua na Parte I nem na Parte II resultados ou descrições de exames, apenas use-os na interpretação do caso. 
+    8. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
       mas que NÃO fazem parte direta da cadeia causal.
-    8. Quando o diagnóstico não for confirmado, utilize termos como:
+    9. Quando o diagnóstico não for confirmado, utilize termos como:
       "suspeito", "provável" ou "presumido", mantendo coerência clínica.
-    9. Não utilize siglas.
-    10. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
-    11. Se a causa não puder ser determinada com segurança,
+    10. Não utilize siglas.
+    11. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
+    12. Se a causa não puder ser determinada com segurança,
         declare causa mal definida e justifique a limitação clínica.
 
     ### FORMATO DE SAÍDA (OBRIGATÓRIO)
@@ -99,7 +100,7 @@ app.post("/doia", async (req, res) => {
     como causas listadas na parte I ou na parte II.
 
      `
-     
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
