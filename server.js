@@ -139,7 +139,9 @@ app.post("/doia", async (req, res) => {
     - Não inclua texto fora do JSON.
     - O campo "comentarios_tecnicos" deve conter justificativa clínica sucinta
       para fins de auditoria médica e validação do sistema.
-      
+
+    - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências.
+
      `
 
     const completion = await openai.chat.completions.create({
