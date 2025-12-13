@@ -59,6 +59,7 @@ app.post("/doia", async (req, res) => {
       8. Use linguagem médica clara, objetiva e compatível com a prática brasileira.
       9. Se a causa não puder ser determinada com segurança, indique causa mal definida,
         explicando a limitação clínica.
+      10. Nunca liste causas como insuficiência respiratória aguda, parada cardiorrespiratória ou falência múltipla de órgãos.
 
       ### FORMATO DE SAÍDA (OBRIGATÓRIO)
 
@@ -66,12 +67,12 @@ app.post("/doia", async (req, res) => {
 
       {
         "parte_I": [
-          { "linha": "a", "descricao": "" },
-          { "linha": "b", "descricao": "" },
-          { "linha": "c", "descricao": "" }
+          { "linha": "a", "descricao": "", "cid-10": "" },
+          { "linha": "b", "descricao": "", "cid-10": "" },
+          { "linha": "c", "descricao": "", "cid-10": "" }
         ],
         "parte_II": [
-          ""
+          { "descricao": "", "cid-10": "" }
         ],
         "comentarios_tecnicos": ""
       }
