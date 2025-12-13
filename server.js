@@ -41,9 +41,26 @@ app.post("/doia", async (req, res) => {
     e identificar corretamente a cadeia de eventos que levou à morte,
     preenchendo as Partes I e II da Declaração de Óbito.
 
-    ### REGRAS CLÍNICAS DE ALTO PESO (OBRIGATÓRIAS):
+    # REGRAS CLÍNICAS DE ALTO PESO (OBRIGATÓRIAS):
 
-    Sempre que houver:
+    1. É EXPRESSAMENTE PROIBIDO utilizar sintomas, sinais clínicos ou manifestações inespecíficas como causa de morte
+    ou como condição contributiva, em qualquer parte da Declaração de Óbito.
+
+    São exemplos proibidos, entre outros:
+    - tosse
+    - dispneia
+    - febre
+    - dor
+    - taquipneia
+    - taquicardia
+    - hipotensão
+    - hipoxemia
+    - dessaturação
+
+    Sintomas e sinais devem ser usados apenas para inferência diagnóstica,
+    nunca como termos finais na Parte I ou Parte II.
+
+    2. Sempre que houver:
     - foco infeccioso documentado OU fortemente sugerido
       (ex: pneumonia, infecção urinária, abdominal)
     E
@@ -62,7 +79,22 @@ app.post("/doia", async (req, res) => {
     o choque deve ser classificado obrigatoriamente como CHOQUE SÉPTICO,
     nunca como hipovolêmico, salvo descrição explícita de perda volêmica.
 
-    ### REGRAS OBRIGATÓRIAS:
+    3. Doenças crônicas pré-existentes, como:
+    - diabetes mellitus tipo 2
+    - hipertensão arterial sistêmica
+    - dislipidemia
+    - obesidade
+
+    NÃO devem ser utilizadas como causa básica da morte,
+    exceto quando forem claramente o evento etiológico principal
+    que iniciou a cadeia causal
+    (ex: cetoacidose diabética, estado hiperosmolar hiperglicêmico).
+
+    Na presença de infecção aguda grave (ex: pneumonia, sepse),
+    essas condições devem ser alocadas, quando pertinentes,
+    exclusivamente na Parte II.
+
+    # OUTRAS REGRAS OBRIGATÓRIAS:
 
     1. A Parte I deve conter APENAS eventos em relação direta de causa e efeito.
     2. A ordem da Parte I deve ser cronológica inversa:
