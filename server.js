@@ -41,7 +41,7 @@ app.post("/doia", async (req, res) => {
     e identificar corretamente a cadeia de eventos que levou à morte,
     preenchendo as Partes I e II da Declaração de Óbito.
 
-    # REGRAS CLÍNICAS DE ALTO PESO (OBRIGATÓRIAS):
+    ### REGRAS CLÍNICAS DE ALTO PESO (OBRIGATÓRIAS):
 
     1. É EXPRESSAMENTE PROIBIDO utilizar sintomas, sinais clínicos ou manifestações inespecíficas como causa de morte
     ou como condição contributiva, em qualquer parte da Declaração de Óbito.
@@ -79,22 +79,7 @@ app.post("/doia", async (req, res) => {
     o choque deve ser classificado obrigatoriamente como CHOQUE SÉPTICO,
     nunca como hipovolêmico, salvo descrição explícita de perda volêmica.
 
-    3. Doenças crônicas pré-existentes, como:
-    - diabetes mellitus tipo 2
-    - hipertensão arterial sistêmica
-    - dislipidemia
-    - obesidade
-
-    NÃO devem ser utilizadas como causa básica da morte,
-    exceto quando forem claramente o evento etiológico principal
-    que iniciou a cadeia causal
-    (ex: cetoacidose diabética, estado hiperosmolar hiperglicêmico).
-
-    Na presença de infecção aguda grave (ex: pneumonia, sepse),
-    essas condições devem ser alocadas, quando pertinentes,
-    exclusivamente na Parte II.
-
-    # OUTRAS REGRAS OBRIGATÓRIAS:
+    ### REGRAS OBRIGATÓRIAS:
 
     1. A Parte I deve conter APENAS eventos em relação direta de causa e efeito.
     2. A ordem da Parte I deve ser cronológica inversa:
@@ -124,6 +109,8 @@ app.post("/doia", async (req, res) => {
     11. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
     12. Se a causa não puder ser determinada com segurança,
         declare causa mal definida e justifique a limitação clínica.
+    13. Não liste doenças crônicas pré-existentes, como hipertensão arterial, diabetes ou obesidade, na Parte I, apenas na Parte II.
+        Diabetes poderá ser causa básica nos casos de cetoacidose diabética.
 
     ### FORMATO DE SAÍDA (OBRIGATÓRIO)
 
