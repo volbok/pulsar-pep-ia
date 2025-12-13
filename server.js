@@ -32,79 +32,55 @@ app.post("/doia", async (req, res) => {
     }
 
     const prompt =
-    `      
-      Leia integralmente o prompt antes de criar uma resposta.
+      `      
+      Você é um médico especialista em preenchimento da Declaração de Óbito (DO) brasileira,
+      com profundo conhecimento em causalidade médica, epidemiologia e normas do Ministério da Saúde.
 
-      Você recebe informações clínicas (diagnósticos, sinais, sintomas, achados, exames e antecedentes mórbidos) e deve produzir
-      exclusivamente a cadeia de causas de óbito (Parte I da Declaração de Óbito) e as outras condições significativas (Parte II)
-      em formato JSON.
+      Sua tarefa é:
+      Analisar um caso clínico de óbito descrito em texto livre, contido no campo ${texto}
+      e identificar corretamente a cadeia de eventos que levou à morte,
+      preenchendo as Partes I e II da Declaração de Óbito.
 
-      Origem das informações: ${texto}
+      ### REGRAS OBRIGATÓRIAS
 
-      # ETAPA 1:
-      Converta primeiro todas as siglas e abreviações reconhecíveis em palavras completas.
-      Para cada informação clínica identificada, classifique-a como apenas uma e a mais adequada das opções: sinal, sintoma,
-      resultado de exame, diagnóstico ou antecedente pessoal.
+      1. A Parte I deve conter APENAS eventos em relação de causa e efeito.
+      2. A ordem da Parte I deve ser cronológica inversa:
+        - I(a): causa imediata
+        - I(b), I(c), I(d): causas intermediárias
+        - A última linha da Parte I é SEMPRE a causa básica.
+      3. A causa básica é o evento que iniciou a cadeia que levou ao óbito.
+      4. Não inclua fatores de risco isolados (ex: obesidade, hipertensão, diabetes)
+        na Parte I, a menos que sejam diretamente responsáveis pela morte.
+      5. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
+        mas que NÃO fazem parte direta da cadeia causal.
+      6. Quando o diagnóstico não for confirmado, utilize termos como:
+        "suspeito", "provável" ou "presumido", mantendo a coerência clínica.
+      7. Não utilize siglas.
+      8. Use linguagem médica clara, objetiva e compatível com a prática brasileira.
+      9. Se a causa não puder ser determinada com segurança, indique causa mal definida,
+        explicando a limitação clínica.
 
-      Analise sempre se os sinais, sintomas e resultados de exames informados para incluir diagnósticos, desde que sejam
-      suficientes para tal. Se não tem certeza, não sugira diagnósticos.
+      ### FORMATO DE SAÍDA (OBRIGATÓRIO)
 
-      No JSON de resposta, liste as informações clínicas devidamente classificadas na array "causas_classificadas".
+      Retorne EXCLUSIVAMENTE um objeto JSON no seguinte formato:
 
-      # ETAPA 2:
-      Selecione APENAS as informações clínicas classificadas como diagnóstico ou antecedente pessoal. Os itens selcionados serão
-      chamados agora de causas.
+      {
+        "parte_I": [
+          { "linha": "a", "descricao": "" },
+          { "linha": "b", "descricao": "" },
+          { "linha": "c", "descricao": "" }
+        ],
+        "parte_II": [
+          ""
+        ],
+        "comentarios_tecnicos": ""
+      }
 
-      Reorganize então as causas para que a relação de causalidade faça sentido, em uma array chamada "causas_elegíveis", que
-      também estará no JSON de resposta. Se presente, choque deve semrpre ser a causa imediata de óbito, ficando à frente das
-      demais.
+      - Use apenas as linhas necessárias na Parte I.
+      - Não inclua texto fora do JSON.
+      - O campo "comentarios_tecnicos" deve conter explicações clínicas resumidas
+        para auditoria médica ou validação do sistema.
 
-      # ETAPA 3:
-      Importante: Apenas os itens da array "causas_elegíveis" serão usados para preenchimento da parte I e da parte II do JSON
-      de reposta.
-
-      Não é necessário preencher todas as linhas da parte I, liste apenas os itens de maior probabilidade e peso. A parte I aceita
-      no máximo 4 linhas. Classifique cada item da parte I com as letras do alfabeto (a, b, c e d), tal como feito na Declaração
-      de Óbito real.
-
-      Reserve para a parte II itens que representam diagnósticos de doenças e antecedentes pessoais
-      contribuidores para a morte, mas que não se enquadram adequadamente na cadeia causal direta da morte (parte I). Não inclua
-      itens que não têm relação com a morte.
-
-      Ao listar cada item, associe-o ao CID-10. Antes de montar o JSON, exclua causas como  "parada cardiorrespiratória",
-      "insuficiência respiratória" ou "falência múltipla de órgãos".
-
-      Formato da resposta (obrigatório).
-      Retorne apenas o JSON, exatamente neste formato:
-
-      "causas_classificadas": [
-        {
-          "item": "",
-          "classificacao" : "",
-        },
-      ],
-      "causas_elegiveis": [
-        {
-          "item": "",
-          "classificacao" : "",
-        },
-      ],
-      "parteI": [
-          {
-            "letra",    
-            "item": "",
-            "cid10": "",
-          },
-      ],
-      "parteII": [
-          {
-              "item": "",
-              "cid10": "",
-          },
-      ],
-
-      Não inclua explicações, comentários, textos adicionais ou variações de formato.
-      A resposta deve ser exclusivamente o JSON.
     `
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
