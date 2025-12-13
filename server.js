@@ -67,12 +67,12 @@ app.post("/doia", async (req, res) => {
 
       {
         "parte_I": [
-          { "linha": "a", "descricao": "", "cid-10": "" },
-          { "linha": "b", "descricao": "", "cid-10": "" },
-          { "linha": "c", "descricao": "", "cid-10": "" }
+          { "linha": "a", "descricao": "", "cid_10": "" },
+          { "linha": "b", "descricao": "", "cid_10": "" },
+          { "linha": "c", "descricao": "", "cid_10": "" }
         ],
         "parte_II": [
-          { "descricao": "", "cid-10": "" }
+          { "descricao": "", "cid_10": "" }
         ],
         "comentarios_tecnicos": ""
       }
