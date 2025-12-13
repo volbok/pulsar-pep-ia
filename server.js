@@ -56,6 +56,9 @@ app.post("/doia", async (req, res) => {
     - hipotensão
     - hipoxemia
     - dessaturação
+    - parada cardiorrespiratória
+    - falência múltipla de órgãos
+    - insuficiência respiratória
 
     Sintomas e sinais devem ser usados apenas para inferência diagnóstica,
     nunca como termos finais na Parte I ou Parte II.
@@ -78,21 +81,7 @@ app.post("/doia", async (req, res) => {
     o choque deve ser classificado obrigatoriamente como CHOQUE SÉPTICO,
     nunca como hipovolêmico, salvo descrição explícita de perda volêmica.
 
-    3. Arritmias cardíacas (ex: fibrilação ventricular, taquicardia ventricular,
-    assistolia) são consideradas MECANISMOS TERMINAIS e NÃO devem ser utilizadas como causa imediata da morte
-    na Declaração de Óbito.
-
-    Sempre que uma arritmia estiver descrita,
-    o modelo deve identificar e declarar
-    a DOENÇA ou EVENTO ETIOLÓGICO subjacente
-    que levou à arritmia.
-
-    Somente é permitido utilizar arritmia como causa
-    em casos excepcionais de arritmia primária documentada,
-    sem outra causa identificável,
-    devendo essa exceção ser explicitamente justificada.
-
-    ### REGRAS OBRIGATÓRIAS:
+    ### DEMAIS REGRAS OBRIGATÓRIAS:
 
     1. A Parte I deve conter APENAS eventos em relação direta de causa e efeito.
     2. A ordem da Parte I deve ser cronológica inversa:
@@ -106,6 +95,7 @@ app.post("/doia", async (req, res) => {
       - "parada cardiorrespiratória"
       - "insuficiência respiratória"
       - "falência múltipla de órgãos"
+      - "fibrilação ventricular"
       - "choque" sem qualificação etiológica
       - "hipóxia", "anóxia" ou termos fisiológicos isolados
     5. Sempre que um desses eventos estiver implícito no caso clínico,
@@ -142,14 +132,7 @@ app.post("/doia", async (req, res) => {
     - Não inclua texto fora do JSON.
     - O campo "comentarios_tecnicos" deve conter justificativa clínica sucinta
       para fins de auditoria médica e validação do sistema.
-
-    Antes de responder, revise criticamente sua própria resposta.
-    Se detectar termos genéricos, causas mal definidas
-    ou violações das normas da Declaração de Óbito,
-    corrija obrigatoriamente antes de entregar a versão final.
-    Lembre-se de nunca colocar insuficiência respiratória aguda, parada cardiorrespiratória e falência múltipla de órgãos
-    como causas listadas na parte I ou na parte II.
-
+      
      `
 
     const completion = await openai.chat.completions.create({
