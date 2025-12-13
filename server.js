@@ -107,6 +107,7 @@ app.post("/doia", async (req, res) => {
       tais como:
       - "parada cardiorrespiratória"
       - "insuficiência respiratória"
+      - "fibrilação ventricular"
       - "falência múltipla de órgãos"
       - "choque" sem qualificação etiológica
       - "hipóxia", "anóxia" ou termos fisiológicos isolados
