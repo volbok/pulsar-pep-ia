@@ -150,6 +150,20 @@ app.post("/quickmed", async (req, res) => {
     Checklist de alta ou de reavaliação (se aplicável).
 
     INSTRUÇÕES IMPORTANTES:
+    * SUBSTITUA SIGLAS E ABREVIAÇÕES PELAS PALAVRAS CORRETAS, CONFORME LISTA ABAIXO:
+    ACV: aparelho cardiovascular.
+    RR 2T ou RCR 2T = ritmo cardíaco regular, em 2 tempos.
+    RCI = ritmo cardíaco irregular.
+    BNF = bulhas normofonéticas.
+    AP = apareho pulmonar.
+    MV = murmúrio vesicular.
+    MVF = murmúrio vesicular fisiológico.
+    SRA = sem ruídos adventícios.
+    MUC= medicações de uso contínuo.
+    LOTE = lúcido, orientado no tempo e no espaço.
+    Tente descobrir as que não estão listadas aqui e modifique-as por palavras completas. Se não descobir, mantenha a
+    sigla ou abreviação.
+    
     * CLASSIFICAÇÃO OBRIGATÓRIA DOS ITENS:
     Cada elemento do texto deve ser categorizado corretamente como:
     Sintoma.
