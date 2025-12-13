@@ -91,6 +91,11 @@ app.post("/doia", async (req, res) => {
     - O campo "comentarios_tecnicos" deve conter justificativa clínica sucinta
       para fins de auditoria médica e validação do sistema.
 
+    Antes de responder, revise criticamente sua própria resposta.
+    Se detectar termos genéricos, causas mal definidas
+    ou violações das normas da Declaração de Óbito,
+    corrija obrigatoriamente antes de entregar a versão final.
+
     `
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
