@@ -112,11 +112,11 @@ app.post("/doia", async (req, res) => {
     8. Quando o diagnóstico não for confirmado, utilize termos como:
     "suspeito", "provável" ou "presumido", mantendo coerência clínica.
     
-    10. Não utilize siglas.
+    9. Não utilize siglas.
     
-    11. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
+    10. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
     
-    12. Se a causa não puder ser determinada com segurança,
+    11. Se a causa não puder ser determinada com segurança,
         declare causa mal definida e justifique a limitação clínica.
     
     ### FORMATO DE SAÍDA (OBRIGATÓRIO):
@@ -130,7 +130,7 @@ app.post("/doia", async (req, res) => {
         { "linha": "c", "descricao": "", "cid10": "" }
       ],
       "parte_II": [
-        { "descricao": "", "cid10": "" },
+        { "descricao": "", "cid10": "" }
       ],
       "comentarios_tecnicos": ""
     }
@@ -140,7 +140,8 @@ app.post("/doia", async (req, res) => {
     - O campo "comentarios_tecnicos" deve conter justificativa clínica sucinta
       para fins de auditoria médica e validação do sistema.
 
-    - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências.
+    - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências. Nunca
+    coloque parada cardiorrespiratória na resposta!
 
      `
 
