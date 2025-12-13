@@ -74,10 +74,23 @@ app.post("/doia", async (req, res) => {
       • alteração do nível de consciência
 
     ENTÃO o diagnóstico de SEPSE deve ser considerado prioritário.
-
     Se houver hipotensão persistente associada à sepse,
     o choque deve ser classificado obrigatoriamente como CHOQUE SÉPTICO,
     nunca como hipovolêmico, salvo descrição explícita de perda volêmica.
+
+    3. Arritmias cardíacas (ex: fibrilação ventricular, taquicardia ventricular,
+    assistolia) são consideradas MECANISMOS TERMINAIS e NÃO devem ser utilizadas como causa imediata da morte
+    na Declaração de Óbito.
+
+    Sempre que uma arritmia estiver descrita,
+    o modelo deve identificar e declarar
+    a DOENÇA ou EVENTO ETIOLÓGICO subjacente
+    que levou à arritmia.
+
+    Somente é permitido utilizar arritmia como causa
+    em casos excepcionais de arritmia primária documentada,
+    sem outra causa identificável,
+    devendo essa exceção ser explicitamente justificada.
 
     ### REGRAS OBRIGATÓRIAS:
 
@@ -92,7 +105,6 @@ app.post("/doia", async (req, res) => {
       tais como:
       - "parada cardiorrespiratória"
       - "insuficiência respiratória"
-      - "fibrilação ventricular"
       - "falência múltipla de órgãos"
       - "choque" sem qualificação etiológica
       - "hipóxia", "anóxia" ou termos fisiológicos isolados
@@ -109,9 +121,7 @@ app.post("/doia", async (req, res) => {
     11. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
     12. Se a causa não puder ser determinada com segurança,
         declare causa mal definida e justifique a limitação clínica.
-    13. Não liste doenças crônicas pré-existentes, como hipertensão arterial, diabetes ou obesidade, na Parte I, apenas na Parte II.
-        Diabetes poderá ser causa básica nos casos de cetoacidose diabética.
-
+    
     ### FORMATO DE SAÍDA (OBRIGATÓRIO)
 
     Retorne EXCLUSIVAMENTE um objeto JSON no seguinte formato:
