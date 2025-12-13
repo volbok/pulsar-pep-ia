@@ -140,8 +140,8 @@ app.post("/doia", async (req, res) => {
     - O campo "comentarios_tecnicos" deve conter justificativa clínica sucinta
       para fins de auditoria médica e validação do sistema.
 
-    - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências. Nunca
-    coloque parada cardiorrespiratória na resposta!
+    - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências.
+      Nunca coloque parada cardiorrespiratória ou insuficiência respiratória na resposta!
 
      `
 
