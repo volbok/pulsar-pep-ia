@@ -95,8 +95,11 @@ app.post("/doia", async (req, res) => {
     Se detectar termos genéricos, causas mal definidas
     ou violações das normas da Declaração de Óbito,
     corrija obrigatoriamente antes de entregar a versão final.
+    Lembre-se de nunca colocar insuficiência respiratória aguda, parada cardiorrespiratória e falência múltipla de órgãos
+    como causas listadas na parte I ou na parte II.
 
-    `
+     `
+     
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
