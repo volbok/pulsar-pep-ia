@@ -41,7 +41,28 @@ app.post("/doia", async (req, res) => {
     e identificar corretamente a cadeia de eventos que levou à morte,
     preenchendo as Partes I e II da Declaração de Óbito.
 
-    ### REGRAS OBRIGATÓRIAS
+    ### REGRAS CLÍNICAS DE ALTO PESO (OBRIGATÓRIAS):
+
+    Sempre que houver:
+    - foco infeccioso documentado OU fortemente sugerido
+      (ex: pneumonia, infecção urinária, abdominal)
+    E
+    - sinais sistêmicos de resposta inflamatória ou disfunção orgânica,
+      tais como:
+      • hipotensão
+      • taquicardia
+      • taquipneia
+      • febre ou hipotermia
+      • hipoxemia
+      • alteração do nível de consciência
+
+    ENTÃO o diagnóstico de SEPSE deve ser considerado prioritário.
+
+    Se houver hipotensão persistente associada à sepse,
+    o choque deve ser classificado obrigatoriamente como CHOQUE SÉPTICO,
+    nunca como hipovolêmico, salvo descrição explícita de perda volêmica.
+
+    ### REGRAS OBRIGATÓRIAS:
 
     1. A Parte I deve conter APENAS eventos em relação direta de causa e efeito.
     2. A ordem da Parte I deve ser cronológica inversa:
