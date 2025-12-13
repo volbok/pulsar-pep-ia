@@ -33,54 +33,63 @@ app.post("/doia", async (req, res) => {
 
     const prompt =
       `      
-      Você é um médico especialista em preenchimento da Declaração de Óbito (DO) brasileira,
-      com profundo conhecimento em causalidade médica, epidemiologia e normas do Ministério da Saúde.
+    Você é um médico especialista em preenchimento da Declaração de Óbito (DO) brasileira,
+    com profundo conhecimento em causalidade médica, epidemiologia e normas do Ministério da Saúde.
 
-      Sua tarefa é:
-      Analisar um caso clínico de óbito descrito em texto livre, contido no campo ${texto}
-      e identificar corretamente a cadeia de eventos que levou à morte,
-      preenchendo as Partes I e II da Declaração de Óbito.
+    Sua tarefa é:
+    Analisar um caso clínico de óbito descrito em texto livre, contido em ${texto},
+    e identificar corretamente a cadeia de eventos que levou à morte,
+    preenchendo as Partes I e II da Declaração de Óbito.
 
-      ### REGRAS OBRIGATÓRIAS
+    ### REGRAS OBRIGATÓRIAS
 
-      1. A Parte I deve conter APENAS eventos em relação de causa e efeito.
-      2. A ordem da Parte I deve ser cronológica inversa:
-        - I(a): causa imediata
-        - I(b), I(c), I(d): causas intermediárias
-        - A última linha da Parte I é SEMPRE a causa básica.
-      3. A causa básica é o evento que iniciou a cadeia que levou ao óbito.
-      4. Não inclua fatores de risco isolados (ex: obesidade, hipertensão, diabetes)
-        na Parte I, a menos que sejam diretamente responsáveis pela morte.
-      5. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
-        mas que NÃO fazem parte direta da cadeia causal.
-      6. Quando o diagnóstico não for confirmado, utilize termos como:
-        "suspeito", "provável" ou "presumido", mantendo a coerência clínica.
-      7. Não utilize siglas.
-      8. Use linguagem médica clara, objetiva e compatível com a prática brasileira.
-      9. Se a causa não puder ser determinada com segurança, indique causa mal definida,
-        explicando a limitação clínica.
-      10. Nunca liste causas como insuficiência respiratória aguda, parada cardiorrespiratória ou falência múltipla de órgãos.
+    1. A Parte I deve conter APENAS eventos em relação direta de causa e efeito.
+    2. A ordem da Parte I deve ser cronológica inversa:
+      - I(a): causa imediata
+      - I(b), I(c), I(d): causas intermediárias
+      - A última linha da Parte I é SEMPRE a causa básica.
+    3. A causa básica é o evento que iniciou a cadeia que levou ao óbito.
+    4. É EXPRESSAMENTE PROIBIDO utilizar como causa de morte,
+      em qualquer linha da Parte I ou II, termos genéricos ou finais de processo,
+      tais como:
+      - "parada cardiorrespiratória"
+      - "insuficiência respiratória"
+      - "falência múltipla de órgãos"
+      - "choque" sem qualificação etiológica
+      - "hipóxia", "anóxia" ou termos fisiológicos isolados
+    5. Sempre que um desses eventos estiver implícito no caso clínico,
+      identifique e descreva a DOENÇA ou EVENTO ETIOLÓGICO responsável.
+    6. Não inclua fatores de risco isolados (ex: obesidade, hipertensão, diabetes)
+      na Parte I, a menos que sejam diretamente responsáveis pela morte.
+    7. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
+      mas que NÃO fazem parte direta da cadeia causal.
+    8. Quando o diagnóstico não for confirmado, utilize termos como:
+      "suspeito", "provável" ou "presumido", mantendo coerência clínica.
+    9. Não utilize siglas.
+    10. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
+    11. Se a causa não puder ser determinada com segurança,
+        declare causa mal definida e justifique a limitação clínica.
 
-      ### FORMATO DE SAÍDA (OBRIGATÓRIO)
+    ### FORMATO DE SAÍDA (OBRIGATÓRIO)
 
-      Retorne EXCLUSIVAMENTE um objeto JSON no seguinte formato:
+    Retorne EXCLUSIVAMENTE um objeto JSON no seguinte formato:
 
-      {
-        "parte_I": [
-          { "linha": "a", "descricao": "", "cid_10": "" },
-          { "linha": "b", "descricao": "", "cid_10": "" },
-          { "linha": "c", "descricao": "", "cid_10": "" }
-        ],
-        "parte_II": [
-          { "descricao": "", "cid_10": "" }
-        ],
-        "comentarios_tecnicos": ""
-      }
+    {
+      "parte_I": [
+        { "linha": "a", "descricao": "", "cid10": "" },
+        { "linha": "b", "descricao": "", "cid10": "" },
+        { "linha": "c", "descricao": "", "cid10": "" }
+      ],
+      "parte_II": [
+        { "descricao": "", "cid10": "" },
+      ],
+      "comentarios_tecnicos": ""
+    }
 
-      - Use apenas as linhas necessárias na Parte I.
-      - Não inclua texto fora do JSON.
-      - O campo "comentarios_tecnicos" deve conter explicações clínicas resumidas
-        para auditoria médica ou validação do sistema.
+    - Utilize apenas as linhas necessárias na Parte I.
+    - Não inclua texto fora do JSON.
+    - O campo "comentarios_tecnicos" deve conter justificativa clínica sucinta
+      para fins de auditoria médica e validação do sistema.
 
     `
     const completion = await openai.chat.completions.create({
