@@ -119,7 +119,7 @@ app.post("/doia", async (req, res) => {
     12. Se a causa não puder ser determinada com segurança,
         declare causa mal definida e justifique a limitação clínica.
     
-    ### FORMATO DE SAÍDA (OBRIGATÓRIO)
+    ### FORMATO DE SAÍDA (OBRIGATÓRIO):
 
     Retorne EXCLUSIVAMENTE um objeto JSON no seguinte formato:
 
