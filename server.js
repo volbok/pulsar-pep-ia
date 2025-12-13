@@ -100,7 +100,7 @@ app.post("/doia", async (req, res) => {
       - "hipóxia", "anóxia" ou termos fisiológicos isolados
     5. Sempre que um desses eventos estiver implícito no caso clínico,
       identifique e descreva a DOENÇA ou EVENTO ETIOLÓGICO responsável.
-    6. Não inclua fatores de risco isolados (ex: obesidade, hipertensão, diabetes)
+    6. Não inclua fatores de risco isolados ou doenças crônicas preexistentes (ex: obesidade, hipertensão, diabetes)
       na Parte I, a menos que sejam diretamente responsáveis pela morte.
     7. Não inclua na Parte I nem na Parte II resultados ou descrições de exames, apenas use-os na interpretação do caso. 
     8. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
