@@ -383,6 +383,104 @@ app.post("/quickmedplus", async (req, res) => {
 
 });
 
+// evolução melhorada trabalhada com o modelo do cliente.
+app.post("/quickmedpersonal", async (req, res) => {
+
+  try {
+    const { texto, modelo } = req.body;
+
+    if (!modelo) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt =
+      `
+        Leia integralmente este prompt antes de gerar a resposta.
+
+        Você é um médico experiente, com amplo domínio de documentação clínica, prontuário eletrônico e diferentes estilos de evolução médica hospitalar.
+
+        Você receberá:
+        1) Um texto bruto de evolução médica, copiado diretamente de um prontuário eletrônico, contendo informações possivelmente desorganizadas, repetidas ou fora de ordem.
+        2) Um MODELO DE EVOLUÇÃO definido pelo usuário, que determina:
+          - os nomes dos tópicos
+          - a ordem dos tópicos
+          - o estilo da evolução
+
+        ========================
+        TEXTO ORIGINAL DA EVOLUÇÃO:
+        ${texto}
+        ========================
+
+        ========================
+        MODELO DE EVOLUÇÃO DESEJADO:
+        ${modelo}
+        ========================
+
+        ### SUA TAREFA:
+
+        1. Interpretar o conteúdo clínico do texto original, identificando as informações relevantes para cada tópico do MODELO.
+
+        2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
+          - os nomes dos tópicos
+          - a ordem dos tópicos
+
+        3. NÃO criar, inferir ou corrigir informações clínicas.
+          - Não incluir diagnósticos, exames ou condutas que não estejam explicitamente mencionados no texto original.
+          - Se algum tópico do MODELO não tiver informação correspondente no texto original, utilize exatamente o texto:
+            "Não informado no registro original."
+
+        4. Aprimorar exclusivamente a forma de escrita:
+          - correção gramatical e ortográfica
+          - clareza, concisão e linguagem médica adequada
+          - eliminação de repetições e trechos confusos
+          - sem alterar o significado clínico
+
+        5. NÃO incluir comentários, explicações ou qualquer texto fora da estrutura solicitada.
+
+        ---
+
+        ### FORMATO OBRIGATÓRIO DA RESPOSTA
+
+        Retorne exclusivamente um JSON válido, exatamente neste formato:
+
+        {
+          "evolucao": [
+            {
+              "topico": "NOME_DO_TOPICO_1",
+              "conteudo": "Texto correspondente a este tópico."
+            },
+            {
+              "topico": "NOME_DO_TOPICO_2",
+              "conteudo": "Texto correspondente a este tópico."
+            }
+          ]
+        }
+
+        ### REGRAS IMPORTANTES:
+        - Os valores de "topico" devem ser **idênticos** aos nomes fornecidos no MODELO.
+        - A ordem dos objetos na array "evolucao" deve ser **exatamente a mesma** do MODELO.
+        - Não incluir campos extras.
+        - Não incluir texto fora do JSON.
+        - O JSON deve ser estritamente válido (aspas, vírgulas, colchetes).
+
+      `
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar a evolução com o modelo selecionado. " + error });
+  }
+
+});
+
 // POST /api/medicamentos
 // api key.
 app.post("/receita", async (req, res) => {
