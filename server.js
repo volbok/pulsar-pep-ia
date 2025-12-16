@@ -547,6 +547,7 @@ app.post("/quickmedprescricao", async (req, res) => {
       - Dados vitais a cada 12h, ou em maior frequência, conforme a gravidade do quadro.
 
       ⚠️ Importante:
+      - SEMPRE prescreva a dieta como primeiro item da prescrição, mesmo que seja zero.
       - Os itens do NÍVEL 2 **não substituem** as medicações do NÍVEL 1.
       - Caso algum item de rotina não seja pertinente ao caso, ele deve ser omitido.
       - Não prescrever itens claramente contraindicados com base nos dados fornecidos.
