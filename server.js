@@ -537,6 +537,12 @@ app.post("/quickmedprescricao", async (req, res) => {
         - Evitar abreviações ambíguas.
         - Evitar esquemas excessivamente complexos.
 
+      8. Para uma completa prescrição médica em ambiente hospitalar, é necessário prescrever:
+        - Dieta, se condição clínica estável.
+        - Medicações sintomáticas para dor e febre, como dipirona ou paracetamol.
+        - Antieméticos, como metoclopramida ou ondansetrona.
+        - Soroterapia com glicose hipertônica, especialmente se a dieta oral está contraindicada.
+        - Enoxaparina em dose profilática ou terapêutica, a depender do diagnóstico, se não há contraindicações.
       ---
 
       ### FORMATO OBRIGATÓRIO DA RESPOSTA
