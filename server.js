@@ -537,7 +537,7 @@ app.post("/quickmedprescricao", async (req, res) => {
 
       Após listar as medicações essenciais, acrescente **quando clinicamente pertinentes**, os seguintes itens comumente presentes em prescrições hospitalares:
 
-      - Dieta (ex.: oral, zero, pastosa, conforme tolerância) >> sempre prescrever, mesmo que seja dieta zero.
+      - Dieta (ex.: oral, zero, pastosa, conforme tolerância) >> sempre indicar a dieta, posicionando-a no primeiro item da prescrição.
       - Sintomáticos:
         - antitérmico para febre (preferir dipirona endovenosa)
         - antiemético para náuseas/vômitos (sempre colocar)
