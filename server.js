@@ -495,11 +495,11 @@ app.post("/quickmedprescricao", async (req, res) => {
       `
       Leia integralmente este prompt antes de gerar a resposta.
 
-      Você é um médico experiente, com amplo conhecimento em clínica médica, terapêutica e prescrição segura em ambiente hospitalar e de urgência.
+      Você é um médico experiente, com amplo domínio de terapêutica clínica e prescrição hospitalar em ambiente de urgência e enfermaria.
 
       Você receberá informações clínicas fornecidas por um médico usuário, incluindo:
       - quadro clínico
-      - hipóteses ou diagnósticos
+      - hipóteses diagnósticas ou diagnósticos
       - sinais vitais
       - dados relevantes de exame físico e exames complementares
 
@@ -510,42 +510,56 @@ app.post("/quickmedprescricao", async (req, res) => {
 
       ### SUA TAREFA:
 
-      1. Avaliar cuidadosamente as informações clínicas fornecidas.
+      Você deve sugerir itens de prescrição médica hospitalar, organizados segundo a prática clínica real, respeitando as prioridades terapêuticas.
 
-      2. Sugerir **medicações compatíveis** com o quadro apresentado, levando em conta:
-        - diagnóstico ou hipótese diagnóstica
-        - sinais vitais
-        - gravidade do caso
-        - uso comum em prática clínica hospitalar
+      A prescrição deve ser construída em **DOIS NÍVEIS OBRIGATÓRIOS**:
 
-      3. ACRESCENTE, para uma completa prescrição médica em ambiente hospitalar,
-        os seguintes itens de prescrição:
-      - Dieta, se condição clínica estável.
-      - Medicações sintomáticas para dor e febre, como dipirona ou paracetamol.
-      - Antieméticos, como metoclopramida ou ondansetrona.
-      - Soroterapia com glicose hipertônica, especialmente se a dieta oral está contraindicada.
-      - Enoxaparina em dose profilática ou terapêutica, a depender do diagnóstico, se não há contraindicações.
-      - Mudança de decúbito, para pacientes acamados ou graves.
+      ---
 
-      4. **NÃO prescrever automaticamente.**
-        - As medicações devem ser apresentadas apenas como **sugestões terapêuticas**.
-        - Não considerar doses individualizadas por peso, idade extrema, função renal ou hepática, a menos que essas informações estejam explicitamente descritas.
+      ### NÍVEL 1 — MEDICAÇÕES ESSENCIAIS AO QUADRO CLÍNICO
+      (Alta prioridade)
 
-      5. **NÃO criar diagnósticos ou condições clínicas não informadas.**
+      1. Identifique as **medicações diretamente relacionadas ao diagnóstico ou hipótese diagnóstica principal**.
+      2. Estas medicações são prioritárias e **nunca devem ser omitidas** quando houver dados clínicos suficientes.
+      3. Inclua aqui, por exemplo:
+        - antibióticos
+        - broncodilatadores
+        - anti-hipertensivos
+        - anti-isquêmicos
+        - corticoides
+        - insulina
+        - outras terapias específicas
 
-      6. **NÃO incluir medicamentos contraindicados** de forma evidente com base nos dados fornecidos.
-        - Se houver informações insuficientes para prescrição segura, limite-se a medicações de suporte ou escreva:
-          "Dados insuficientes para sugerir medicações específicas."
+      ---
 
-      7. Para cada medicamento sugerido, informe:
-        - nome do medicamento (preferencialmente DCB)
-        - diluição padrão, quando aplicável
-        - posologia usual em adultos
+      ### NÍVEL 2 — ITENS DE PRESCRIÇÃO HOSPITALAR DE ROTINA
+      (Prioridade secundária – complemento)
 
-      8. Utilizar linguagem médica clara, objetiva e segura.
-        - Evitar abreviações ambíguas.
-        - Evitar esquemas excessivamente complexos.
-      
+      Após listar as medicações essenciais, acrescente **quando clinicamente pertinentes**, os seguintes itens comumente presentes em prescrições hospitalares:
+
+      - Dieta (ex.: oral, zero, pastosa, conforme tolerância)
+      - Sintomáticos:
+        - antitérmico para febre
+        - antiemético para náuseas/vômitos
+      - Anticoagulação profilática, quando não houver contraindicações evidentes
+      - Soroterapia de manutenção ou hidratação
+      - Glicose hipertônica **apenas se houver hipoglicemia documentada ou mencionada**
+
+      ⚠️ Importante:
+      - Os itens do NÍVEL 2 **não substituem** as medicações do NÍVEL 1.
+      - Caso algum item de rotina não seja pertinente ao caso, ele deve ser omitido.
+      - Não prescrever itens claramente contraindicados com base nos dados fornecidos.
+
+      ---
+
+      ### REGRAS GERAIS:
+
+      - NÃO criar diagnósticos ou condições clínicas não informadas.
+      - NÃO individualizar doses por peso, função renal ou idade extrema, salvo se esses dados estiverem explicitamente descritos.
+      - Utilizar doses e esquemas usuais em adultos.
+      - Utilizar linguagem médica clara, objetiva e segura.
+      - Evitar abreviações ambíguas.
+
       ---
 
       ### FORMATO OBRIGATÓRIO DA RESPOSTA
@@ -562,11 +576,11 @@ app.post("/quickmedprescricao", async (req, res) => {
         ]
       }
 
-      ### REGRAS IMPORTANTES:
-      - Não incluir texto fora do JSON.
-      - Não incluir comentários, explicações ou alertas adicionais.
-      - O JSON deve ser estritamente válido.
-      - Caso nenhuma medicação possa ser sugerida com segurança, retorne a array "prescricao" vazia.
+      ### REGRAS DE SAÍDA:
+      - A array "prescricao" deve conter primeiro os itens do NÍVEL 1, seguidos pelos itens do NÍVEL 2.
+      - Não incluir campos extras.
+      - Não incluir comentários, explicações ou textos fora do JSON.
+      - Caso não haja dados suficientes para sugerir medicações essenciais, retorne a array vazia.
 
       `
 
