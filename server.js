@@ -481,6 +481,102 @@ app.post("/quickmedpersonal", async (req, res) => {
 
 });
 
+// evolução melhorada trabalhada com o modelo do cliente.
+app.post("/quickmedprescricao", async (req, res) => {
+
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt =
+      `
+      Leia integralmente este prompt antes de gerar a resposta.
+
+      Você é um médico experiente, com amplo conhecimento em clínica médica, terapêutica e prescrição segura em ambiente hospitalar e de urgência.
+
+      Você receberá informações clínicas fornecidas por um médico usuário, incluindo:
+      - quadro clínico
+      - hipóteses ou diagnósticos
+      - sinais vitais
+      - dados relevantes de exame físico e exames complementares
+
+      ========================
+      INFORMAÇÕES CLÍNICAS DO CASO:
+      ${texto}
+      ========================
+
+      ### SUA TAREFA:
+
+      1. Avaliar cuidadosamente as informações clínicas fornecidas.
+
+      2. Sugerir **medicações compatíveis** com o quadro apresentado, levando em conta:
+        - diagnóstico ou hipótese diagnóstica
+        - sinais vitais
+        - gravidade do caso
+        - uso comum em prática clínica hospitalar
+
+      3. **NÃO prescrever automaticamente.**
+        - As medicações devem ser apresentadas apenas como **sugestões terapêuticas**.
+        - Não considerar doses individualizadas por peso, idade extrema, função renal ou hepática, a menos que essas informações estejam explicitamente descritas.
+
+      4. **NÃO criar diagnósticos ou condições clínicas não informadas.**
+
+      5. **NÃO incluir medicamentos contraindicados** de forma evidente com base nos dados fornecidos.
+        - Se houver informações insuficientes para prescrição segura, limite-se a medicações de suporte ou escreva:
+          "Dados insuficientes para sugerir medicações específicas."
+
+      6. Para cada medicamento sugerido, informe:
+        - nome do medicamento (preferencialmente DCB)
+        - diluição padrão, quando aplicável
+        - posologia usual em adultos
+
+      7. Utilizar linguagem médica clara, objetiva e segura.
+        - Evitar abreviações ambíguas.
+        - Evitar esquemas excessivamente complexos.
+
+      ---
+
+      ### FORMATO OBRIGATÓRIO DA RESPOSTA
+
+      Retorne exclusivamente um JSON válido, exatamente neste formato:
+
+      {
+        "prescricao": [
+          {
+            "medicamento": "",
+            "diluicao": "",
+            "posologia": ""
+          }
+        ]
+      }
+
+      ### REGRAS IMPORTANTES:
+      - Não incluir texto fora do JSON.
+      - Não incluir comentários, explicações ou alertas adicionais.
+      - O JSON deve ser estritamente válido.
+      - Caso nenhuma medicação possa ser sugerida com segurança, retorne a array "prescricao" vazia.
+
+      `
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar a evolução com o modelo selecionado. " + error });
+  }
+
+});
+
 // POST /api/medicamentos
 // api key.
 app.post("/receita", async (req, res) => {
