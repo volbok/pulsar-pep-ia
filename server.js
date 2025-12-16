@@ -518,31 +518,34 @@ app.post("/quickmedprescricao", async (req, res) => {
         - gravidade do caso
         - uso comum em prática clínica hospitalar
 
-      3. **NÃO prescrever automaticamente.**
+      3. Além das medicações compatíveis, para uma completa prescrição médica em ambiente hospitalar,
+        é necessário prescrever também:
+      - Dieta, se condição clínica estável.
+      - Medicações sintomáticas para dor e febre, como dipirona ou paracetamol.
+      - Antieméticos, como metoclopramida ou ondansetrona.
+      - Soroterapia com glicose hipertônica, especialmente se a dieta oral está contraindicada.
+      - Enoxaparina em dose profilática ou terapêutica, a depender do diagnóstico, se não há contraindicações.
+      - Mudança de decúbito, para pacientes acamados ou graves.
+
+      4. **NÃO prescrever automaticamente.**
         - As medicações devem ser apresentadas apenas como **sugestões terapêuticas**.
         - Não considerar doses individualizadas por peso, idade extrema, função renal ou hepática, a menos que essas informações estejam explicitamente descritas.
 
-      4. **NÃO criar diagnósticos ou condições clínicas não informadas.**
+      5. **NÃO criar diagnósticos ou condições clínicas não informadas.**
 
-      5. **NÃO incluir medicamentos contraindicados** de forma evidente com base nos dados fornecidos.
+      6. **NÃO incluir medicamentos contraindicados** de forma evidente com base nos dados fornecidos.
         - Se houver informações insuficientes para prescrição segura, limite-se a medicações de suporte ou escreva:
           "Dados insuficientes para sugerir medicações específicas."
 
-      6. Para cada medicamento sugerido, informe:
+      7. Para cada medicamento sugerido, informe:
         - nome do medicamento (preferencialmente DCB)
         - diluição padrão, quando aplicável
         - posologia usual em adultos
 
-      7. Utilizar linguagem médica clara, objetiva e segura.
+      8. Utilizar linguagem médica clara, objetiva e segura.
         - Evitar abreviações ambíguas.
         - Evitar esquemas excessivamente complexos.
-
-      8. Para uma completa prescrição médica em ambiente hospitalar, é necessário prescrever:
-        - Dieta, se condição clínica estável.
-        - Medicações sintomáticas para dor e febre, como dipirona ou paracetamol.
-        - Antieméticos, como metoclopramida ou ondansetrona.
-        - Soroterapia com glicose hipertônica, especialmente se a dieta oral está contraindicada.
-        - Enoxaparina em dose profilática ou terapêutica, a depender do diagnóstico, se não há contraindicações.
+      
       ---
 
       ### FORMATO OBRIGATÓRIO DA RESPOSTA
