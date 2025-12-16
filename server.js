@@ -518,8 +518,8 @@ app.post("/quickmedprescricao", async (req, res) => {
         - gravidade do caso
         - uso comum em prática clínica hospitalar
 
-      3. Além das medicações compatíveis, para uma completa prescrição médica em ambiente hospitalar,
-        é necessário prescrever também:
+      3. ACRESCENTE, para uma completa prescrição médica em ambiente hospitalar,
+        os seguintes itens de prescrição:
       - Dieta, se condição clínica estável.
       - Medicações sintomáticas para dor e febre, como dipirona ou paracetamol.
       - Antieméticos, como metoclopramida ou ondansetrona.
