@@ -570,13 +570,14 @@ app.post("/quickmedprescricao", async (req, res) => {
       Retorne exclusivamente um JSON válido, exatamente neste formato:
 
       {
+        "dieta": ""  
         "prescricao": [
-          {
-            "medicamento": "",
-            "diluicao": "",
-            "posologia": ""
-          }
-        ]
+            {
+              "medicamento": "",
+              "diluicao": "",
+              "posologia": ""
+            }
+          ]
       }
 
       ### REGRAS DE SAÍDA:
