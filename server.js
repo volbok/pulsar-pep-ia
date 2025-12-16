@@ -537,18 +537,20 @@ app.post("/quickmedprescricao", async (req, res) => {
 
       Após listar as medicações essenciais, acrescente **quando clinicamente pertinentes**, os seguintes itens comumente presentes em prescrições hospitalares:
 
-      - Dieta (ex.: oral, zero, pastosa, conforme tolerância)
+      - Dieta (ex.: oral, zero, pastosa, conforme tolerância) >> sempre prescrever, mesmo que seja dieta zero.
       - Sintomáticos:
-        - antitérmico para febre
-        - antiemético para náuseas/vômitos
+        - antitérmico para febre (preferir dipirona endovenosa)
+        - antiemético para náuseas/vômitos (sempre colocar)
       - Anticoagulação profilática, quando não houver contraindicações evidentes
-      - Soroterapia de manutenção ou hidratação
-      - Glicose hipertônica **apenas se houver hipoglicemia documentada ou mencionada**
+      - Soroterapia de manutenção, com glicose hipertônica, ou hidratação
+      - Glicose hipertônica 40ml (sempre deixar na prescrição, será usada a critério médico)
+      - Dados vitais a cada 12h, ou em maior frequência, conforme a gravidade do quadro.
 
       ⚠️ Importante:
       - Os itens do NÍVEL 2 **não substituem** as medicações do NÍVEL 1.
       - Caso algum item de rotina não seja pertinente ao caso, ele deve ser omitido.
       - Não prescrever itens claramente contraindicados com base nos dados fornecidos.
+      - Preferir prednisona ou hidrocortisona se for necessário prescrever corticoterapia.
 
       ---
 
