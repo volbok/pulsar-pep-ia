@@ -583,6 +583,7 @@ app.post("/quickmedprescricao", async (req, res) => {
       - **soroterapia**  
         Sugira soluções usuais:  
         SF 0,9%, Ringer Lactato ou SG 5%, conforme o quadro clínico.
+        Não sugira soroterapia em casos onde pode haver sinais de congestão pulmonar ou sobrecarga hídrica (insuficiência cardíaca, tromboembolismo pulmonar).
 
       - **itens_especificos**  
         Listar aqui **somente medicamentos diretamente relacionados ao diagnóstico principal**, como:
