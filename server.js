@@ -552,7 +552,6 @@ app.post("/quickmedprescricao", async (req, res) => {
       - Caso algum item de rotina não seja pertinente ao caso, ele deve ser omitido.
       - Não prescrever itens claramente contraindicados com base nos dados fornecidos.
       - Preferir SEMPRE prednisona ou hidrocortisona se for necessário prescrever corticóide. Não use metilprednisolona.
-      - Revise cada item antes de entregar a resposta e traduza cuidadosamente cada item para o português.
 
       ---
 
