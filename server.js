@@ -572,6 +572,7 @@ app.post("/quickmedprescricao", async (req, res) => {
       - **anticoagulacao**  
         Sugira profilaxia quando clinicamente indicada, usando:  
         heparina não fracionada ou enoxaparina.  
+        Indicar anticoagulação plena nos casos indicados (infarto agudo do miocárdio, fibrolação atrial, trombose venosa profunda e/ou embolia pulmonar).
         Não prescrever se houver contraindicação evidente no texto.
 
       - **antibioticoterapia**  
