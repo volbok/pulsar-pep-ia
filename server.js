@@ -584,7 +584,10 @@ app.post("/quickmedprescricao", async (req, res) => {
       - **soroterapia**  
         Sugira soluções usuais:  
         SF 0,9%, Ringer Lactato ou SG 5%, conforme o quadro clínico.
-        Não sugira soroterapia em casos onde pode haver sinais de congestão pulmonar ou sobrecarga hídrica (insuficiência cardíaca, tromboembolismo pulmonar).
+        Indique soroterapia com solução fisiológica associada a glicose hipertônica nos casos onde a dieta está suspensa, ou quando o
+        paciente está grave (sepse grave, choque séptico).
+        Inidique soroterapia com velocidade de infusão mais alta (acima de 50ml/kg/h) em casos de hipovolemia, desidratação grave, sepse
+        e choque séptico.
 
       - **itens_especificos**  
         Listar aqui **somente medicamentos diretamente relacionados ao diagnóstico principal**, como:
