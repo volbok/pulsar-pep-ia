@@ -551,7 +551,7 @@ app.post("/quickmedprescricao", async (req, res) => {
       - Os itens do NÍVEL 2 **não substituem** as medicações do NÍVEL 1.
       - Caso algum item de rotina não seja pertinente ao caso, ele deve ser omitido.
       - Não prescrever itens claramente contraindicados com base nos dados fornecidos.
-      - Preferir SEMPRE prednisona ou hidrocortisona se for necessário prescrever corticóide. Não use metilprednisolona.
+      - Preferir SEMPRE prednisona oral ou hidrocortisona intravenosa se for necessário prescrever corticóide. Não use metilprednisolona.
 
       ---
 
