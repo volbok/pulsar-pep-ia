@@ -534,6 +534,8 @@ app.post("/quickmedprescricao", async (req, res) => {
         "antiemetico": "",
         "protetor_gastrico": "",
         "anticoagulacao": "",
+        "insulinoterapia": "insulina regular SC conforme protocolo glicêmico"
+        "glicose": "SGH 50% se glicemia capilar < 70mg/dl"
         "antibioticoterapia": "",
         "soroterapia": "",
         "itens_especificos": [
