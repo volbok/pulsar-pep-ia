@@ -458,6 +458,7 @@ app.post("/quickmedpersonal", async (req, res) => {
         ### REGRAS IMPORTANTES:
         - Os valores de "topico" devem ser **idênticos** aos nomes fornecidos no MODELO.
         - A ordem dos objetos na array "evolucao" deve ser **exatamente a mesma** do MODELO.
+        - Itens de resultados de exames, diagnósticos e condutas devem ser separados por quebra de linha.
         - Não incluir campos extras.
         - Não incluir texto fora do JSON.
         - O JSON deve ser estritamente válido (aspas, vírgulas, colchetes).
