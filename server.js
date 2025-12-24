@@ -452,7 +452,7 @@ app.post("/quickmedpersonal", async (req, res) => {
           Alguns campos do JSON devem representar **listas de itens**, porém mantendo o tipo STRING.
 
           Para esses campos:
-          - Cada item deve ser apresentado em uma nova linha e ser finalizado com o acento de ponto final.
+          - Cada item deve ser apresentado em uma nova linha.
           - Utilize obrigatoriamente o caractere de quebra de linha "\n" entre os itens.
           - Não utilizar marcadores como "-", "•" ou numeração.
           - Não transformar esses campos em arrays.
@@ -465,7 +465,7 @@ app.post("/quickmedpersonal", async (req, res) => {
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
           Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
-          "Exemplo de item 1.\nExemplo de item 2.\nExemplo de item 3."
+          "Exemplo de item 1\nExemplo de item 2\nExemplo de item 3."
 
         ---
 
