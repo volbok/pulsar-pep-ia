@@ -461,20 +461,9 @@ Antes de escrever o conteúdo de cada tópico do MODELO, você DEVE:
    OU
    b) Lista clínica de itens independentes (ex.: hipóteses diagnósticas, exames, condutas, planos terapêuticos)
 
-2. Se o tópico for do tipo LISTA CLÍNICA:
-   - Quebrar o conteúdo em itens clínicos independentes.
-   - Cada item deve representar uma única informação clínica.
-   - Cada item DEVE terminar com ponto final ".".
-   - Os itens DEVEM ser unidos em uma STRING única usando o caractere "\n".
-
-3. É PROIBIDO retornar conteúdo listável em forma de parágrafo único.
-
----
-
-### FORMATAÇÃO OBRIGATÓRIA DE CAMPOS LISTÁVEIS (REGRA CRÍTICA)
+2. Se o tópico for do tipo LISTA CLÍNICA, classificar o tópico como lista. Do contrário, classificar como texto.
 
 Os campos abaixo SEMPRE representam listas clínicas, mesmo que o texto original esteja em parágrafo único:
-
 - hipóteses diagnósticas
 - exames complementares
 - condutas
@@ -482,44 +471,6 @@ Os campos abaixo SEMPRE representam listas clínicas, mesmo que o texto original
 - problemas
 - diagnósticos
 - quaisquer outros campos do MODELO que representem múltiplos itens clínicos distintos
-
-Regras obrigatórias:
-- Converter o conteúdo em itens independentes.
-- Cada item em nova linha.
-- Cada item DEVE terminar com ponto final ".".
-- Separar itens exclusivamente com "\n".
-- NÃO usar marcadores, hífens, números ou símbolos.
-- NÃO transformar esses campos em arrays.
-- NÃO retornar texto corrido nesses campos.
-
----
-
-### EXEMPLOS OBRIGATÓRIOS DE FORMATAÇÃO
-
-Campo: "HIPÓTESES DIAGNÓSTICAS"
-
-Correto:
-"Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda."
-
-Incorreto (NUNCA FAZER):
-"Pneumonia comunitária grave\nChoque séptico de foco pulmonar\nInsuficiência respiratória aguda"
-
-Exemplo realista:
-Texto original:
-"Paciente com pneumonia grave, evoluindo com sepse e insuficiência respiratória."
-
-Resposta correta:
-"Pneumonia comunitária grave.\nSepse.\nInsuficiência respiratória aguda."
-
----
-
-### VERIFICAÇÃO FINAL OBRIGATÓRIA (ANTES DO OUTPUT)
-
-Antes de retornar o JSON final:
-- Revise todos os campos listáveis.
-- Se algum item não terminar com ".", adicione o ponto final.
-- Se um campo listável estiver em parágrafo único, reescreva-o como lista.
-- Somente após essa verificação, retorne a resposta.
 
 ---
 
@@ -531,11 +482,13 @@ Retorne exclusivamente um JSON válido, exatamente neste formato:
   "evolucao": [
     {
       "topico": "NOME_DO_TOPICO_1",
-      "conteudo": "Texto correspondente a este tópico."
+      "conteudo": ["item 1 da lista", "item 2 da lista"]
+      "classificacao": "lista"
     },
     {
       "topico": "NOME_DO_TOPICO_2",
       "conteudo": "Texto correspondente a este tópico."
+      "classificacao": "texto"
     }
   ]
 }
