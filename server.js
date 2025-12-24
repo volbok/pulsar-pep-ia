@@ -452,19 +452,23 @@ app.post("/quickmedpersonal", async (req, res) => {
           Alguns campos do JSON devem representar **listas de itens**, porém mantendo o tipo STRING.
 
           Para esses campos:
-          - Cada item deve ser apresentado em uma nova linha e receber um ponto em seu final.
+          - Cada item deve ser apresentado em uma nova linha e ser finalizado com o acento de ponto final.
           - Utilize obrigatoriamente o caractere de quebra de linha "\n" entre os itens.
           - Não utilizar marcadores como "-", "•" ou numeração.
           - Não transformar esses campos em arrays.
 
           Os campos que devem seguir este padrão são:
           - hipóteses diagnósticas
+          - exames complementares
           - condutas
           - planos terapêuticos
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
+          Para campos relacionados ao exame físico, procurar fragmentar e listar o conteúdo conforme o aparelho ou sistema
+          examinado (aparelho cardiovascular, respiratório, exame neurologico, exame do abdome, etc.).
+          
           Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
-          "Exemplo de item 1\nExemplo de item 2\nExemplo de item 3"
+          "Exemplo de item 1.\nExemplo de item 2.\nExemplo de item 3."
 
         ---
 
