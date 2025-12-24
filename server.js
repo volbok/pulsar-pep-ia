@@ -429,7 +429,7 @@ app.post("/quickmedpersonal", async (req, res) => {
             MVF = murmúrio vesicular fisiológico;
             SRA = sem ruídos adventícios.
             MUC= medicações de uso contínuo.
-            NÃO substitua siglas ou abreviações que desconhece.
+            NÃO substitua siglas ou abreviações que desconhece. NÃO substitua unidades de medida de resultados laboratoriais. 
 
         2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
           - os nomes dos tópicos
