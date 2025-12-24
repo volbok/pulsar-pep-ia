@@ -465,10 +465,19 @@ app.post("/quickmedpersonal", async (req, res) => {
           - planos terapêuticos
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
-          Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
-          "Exemplo de item 1\nExemplo de item 2\nExemplo de item 3"
+          EXEMPLO OBRIGATÓRIO DE FORMATAÇÃO:
+          Correto:
+          {
+              "topico": "HIPÓTESES DIAGNÓSTICAS",
+              "conteudo": "Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda."
+          },
 
-        ---
+          Incorreto (NUNCA FAZER):
+          {
+              "topico": "HIPÓTESES DIAGNÓSTICAS",
+              "conteudo": "Pneumonia comunitária grave\nChoque séptico de foco pulmonar\nInsuficiência respiratória aguda"
+          },
+          
 
         ### FORMATO OBRIGATÓRIO DA RESPOSTA
 
@@ -492,7 +501,7 @@ app.post("/quickmedpersonal", async (req, res) => {
         - A ordem dos objetos na array "evolucao" deve ser **exatamente a mesma** do MODELO.
         - Não incluir campos extras.
         - Não incluir texto fora do JSON.
-        - Os itens das listas sempre devem ter ponto final.
+        - Os itens das listas SEMPRE devem ter ponto final. Se não pontuados, 
         - O JSON deve ser estritamente válido (aspas, vírgulas, colchetes).
 
       `
@@ -589,7 +598,7 @@ app.post("/quickmedprescricao", async (req, res) => {
 
       - **dados_vitais**  
         Utilize linguagem hospitalar padrão brasileira  
-        (ex.: “aferir FC, FR, PA, SpO₂ e temperatura a cada 6–12h”).
+        (ex.: “Aferir FC, FR, PA, SpO₂ e temperatura a cada 6–12h”).
 
       - **analgesia**  
         Sugira 2 ou 3 opções usuais no Brasil, como:  
@@ -724,8 +733,11 @@ app.post("/quickmedprescricao", async (req, res) => {
         - anticonvulsivantes
 
         Cada item deve conter:
-        - nome do medicamento
+        - exclusivamente o nome do princípio ativo do medicamento
         - posologia usual em adultos
+        
+        Exemplo correto:
+        Amoxicilina 500mg VO 6/6h
 
 
       ### REGRAS IMPORTANTES:
@@ -733,7 +745,7 @@ app.post("/quickmedprescricao", async (req, res) => {
       - NÃO criar diagnósticos não descritos.
       - NÃO individualizar doses por peso, idade extrema ou função renal, salvo se informado.
       - NÃO incluir medicamentos claramente contraindicados.
-      - Sempre iniciar o nome da medicação ou tratamento com letra maiúscula.
+      - Sempre iniciar o nome do item prescrito com letra maiúscula.
       - NÃO incluir comentários, explicações ou textos fora do JSON.
       - O JSON deve ser estritamente válido.
 
