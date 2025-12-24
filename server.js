@@ -452,7 +452,8 @@ app.post("/quickmedpersonal", async (req, res) => {
           Alguns campos do JSON devem representar **listas de itens**, porém mantendo o tipo STRING.
 
           Para esses campos:
-          - Cada item deve ser apresentado em uma nova linha. **NUNCA** deixe itens sem pontuação final.
+          - Cada item deve ser apresentado em uma nova linha.
+            IMPORTANTE: NUNCA deixe itens sem pontuação final.
           - Utilize obrigatoriamente o caractere de quebra de linha "\n" entre os itens.
           - Não utilizar marcadores como "-", "•" ou numeração.
           - Não transformar esses campos em arrays.
