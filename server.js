@@ -465,7 +465,7 @@ app.post("/quickmedpersonal", async (req, res) => {
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
           Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
-          "Exemplo de item 1\nExemplo de item 2\nExemplo de item 3"
+          "Exemplo de item 1.\nExemplo de item 2.\nExemplo de item 3."
 
         ---
 
@@ -569,6 +569,7 @@ app.post("/quickmedprescricao", async (req, res) => {
         "glicose": "SGH 50% se glicemia capilar < 70mg/dl"
         "antibioticoterapia": "",
         "soroterapia": "",
+        "aminas_vasoativas" : "",
         "itens_especificos": [
           {
             "item": "",
@@ -613,12 +614,103 @@ app.post("/quickmedprescricao", async (req, res) => {
         Se não indicada, deixar campo vazio ("").
 
       - **soroterapia**  
-        Sugira soluções usuais:  
-        SF 0,9%, Ringer Lactato ou SG 5%, conforme o quadro clínico.
-        Indique soroterapia com solução fisiológica associada a glicose hipertônica nos casos onde a dieta está suspensa, ou quando o
-        paciente está grave (sepse grave, choque séptico).
-        Inidique soroterapia com velocidade de infusão mais alta (acima de 50ml/kg/h) em casos de hipovolemia, desidratação grave, sepse
-        e choque séptico.
+        A sugestão de soroterapia deve ser baseada exclusivamente nos dados clínicos informados no texto de entrada.
+        Antes de sugerir a soroterapia, identifique se o paciente se enquadra em um ou mais dos seguintes cenários clínicos:
+
+        1. Dieta suspensa ou ingestão oral inadequada
+        2. Desidratação clínica ou laboratorial
+        3. Hipovolemia ou instabilidade hemodinâmica
+        4. Sepse ou suspeita de sepse
+        5. Manutenção hospitalar sem perdas significativas
+        6. Ausência de indicação clara para soroterapia
+
+        ### CONDUTA PARA CADA CENÁRIO:
+
+        - **Dieta suspensa / Jejum**
+          - Priorizar soroterapia de manutenção
+          - Opções usuais na prática brasileira:
+            - SG 5%
+            - SG 5% + eletrólitos, se indicado
+
+        - **Desidratação**
+          - Priorizar reposição volêmica
+          - Opções usuais:
+            - SF 0,9%
+            - Ringer Lactato
+          - Ajustar volume conforme gravidade descrita no texto
+
+        - **Hipovolemia / Instabilidade hemodinâmica**
+          - Priorizar expansão volêmica
+          - Opções usuais:
+            - SF 0,9%
+            - Ringer Lactato
+          - Evitar soluções glicosadas como primeira escolha
+
+        - **Sepse ou suspeita de sepse**
+          - Priorizar cristalóides isotônicos
+          - Opções usuais:
+            - SF 0,9%
+            - Ringer Lactato
+          - Não sugerir coloides
+          - Não sugerir SG 5% isoladamente
+
+        - **Manutenção hospitalar**
+          - Sugestão conforme rotina:
+            - SF 0,9%
+            - SG 5%, conforme tolerância e quadro clínico
+
+        - **Ausência de indicação clara**
+          - Omitir soroterapia ou indicar apenas:
+            "Manter hidratação conforme aceitação oral"
+
+        ### REGRAS IMPORTANTES PARA SOROTERAPIA:
+
+        - Utilizar apenas soluções amplamente usadas no Brasil.
+        - Não sugerir volumes extremamente específicos, salvo se descritos no texto.
+        - Não sugerir reposição eletrolítica complexa sem dados laboratoriais.
+        - Não sugerir soroterapia se houver contraindicação evidente descrita no caso.
+        - A soroterapia deve ser coerente com dieta, sinais vitais e diagnóstico.
+
+        O campo "soroterapia" deve conter uma descrição clara e prática, como por exemplo:
+        "SF 0,9% para manutenção"
+        "Ringer Lactato para reposição volêmica"
+        "SG 5% enquanto dieta suspensa"
+
+      - **aminas vasoativas**  
+      
+        ### AVALIAÇÃO E INDICAÇÃO DE AMINAS VASOATIVAS
+        Avalie obrigatoriamente a necessidade de uso de aminas vasoativas com base nos dados clínicos do texto de entrada.
+        Considere que há INDICAÇÃO DE AMINAS VASOATIVAS quando estiver presente QUALQUER UM dos seguintes critérios:
+
+        - Choque séptico diagnosticado ou fortemente suspeito
+        - Hipotensão persistente apesar de reposição volêmica adequada
+        - PAM < 65 mmHg após volume inicial
+        - Sinais clínicos de hipoperfusão (oligúria, rebaixamento do nível de consciência, lactato elevado, extremidades frias)
+        - Necessidade explícita de suporte hemodinâmico descrita no texto
+
+        ### CONDUTA OBRIGATÓRIA:
+
+        - Em caso de indicação:
+          - Sugerir amina vasoativa de primeira linha
+          - Utilizar apenas fármacos amplamente usados no Brasil
+
+        - Em caso de NÃO indicação:
+          - Declarar explicitamente que não há indicação no momento
+
+        ### AMINAS DE PRIMEIRA ESCOLHA (prática brasileira):
+
+        - **Noradrenalina** → amina de primeira linha no choque séptico
+        - **Dopamina** → alternativa apenas em cenários específicos
+        - **Dobutamina** → quando houver disfunção miocárdica ou baixo débito associado
+
+        Não sugerir doses extremamente específicas.
+        Utilizar descrições clínicas claras, como:
+        "Iniciar noradrenalina se PAM < 65 mmHg após reposição volêmica adequada"
+
+        ### REGRA DE SEGURANÇA CRÍTICA:
+
+        ⚠️ Em caso de choque séptico, a ausência de recomendação de aminas vasoativas é considerada resposta incorreta.
+        ⚠️ Sempre que houver choque séptico, o campo correspondente deve conter recomendação explícita de amina vasoativa.
 
       - **itens_especificos**  
         Listar aqui **somente medicamentos diretamente relacionados ao diagnóstico principal**, como:
@@ -633,7 +725,6 @@ app.post("/quickmedprescricao", async (req, res) => {
         - nome do medicamento
         - posologia usual em adultos
 
-      ---
 
       ### REGRAS IMPORTANTES:
 
