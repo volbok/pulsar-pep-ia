@@ -393,112 +393,160 @@ app.post("/quickmedpersonal", async (req, res) => {
     }
 
     const prompt =
-      `
-        Leia integralmente este prompt antes de gerar a resposta.
+      `Leia integralmente este prompt antes de gerar a resposta.
 
-        Você é um médico experiente, com amplo domínio de documentação clínica, prontuário eletrônico e diferentes estilos de evolução médica hospitalar.
+Você é um médico experiente, com amplo domínio de documentação clínica, prontuário eletrônico e diferentes estilos de evolução médica hospitalar.
 
-        Você receberá:
-        1) Um texto bruto de evolução médica, copiado diretamente de um prontuário eletrônico, contendo informações possivelmente desorganizadas, repetidas ou fora de ordem.
-        2) Um MODELO DE EVOLUÇÃO definido pelo usuário, que determina:
-          - os nomes dos tópicos
-          - a ordem dos tópicos
-          - o estilo da evolução
+Você receberá:
+1) Um texto bruto de evolução médica, copiado diretamente de um prontuário eletrônico, contendo informações possivelmente desorganizadas, repetidas ou fora de ordem.
+2) Um MODELO DE EVOLUÇÃO definido pelo usuário, que determina:
+   - os nomes dos tópicos
+   - a ordem dos tópicos
+   - o estilo da evolução
 
-        ========================
-        TEXTO ORIGINAL DA EVOLUÇÃO:
-        ${texto}
-        ========================
+========================
+TEXTO ORIGINAL DA EVOLUÇÃO:
+${texto}
+========================
 
-        ========================
-        MODELO DE EVOLUÇÃO DESEJADO:
-        ${modelo}
-        ========================
+========================
+MODELO DE EVOLUÇÃO DESEJADO:
+${modelo}
+========================
 
-        ### SUA TAREFA:
+### SUA TAREFA:
 
-        1. Interpretar o conteúdo clínico do texto original, identificando as informações relevantes para cada tópico do MODELO.
-            Substituir siglas e abreviações de termos médicos encontrados na string "texto", quando identificáveis com certeza. Abaixo tem uma lista
-            de siglas e abreviações que precisam ser substituidas por expressões completas:
-            ACV: aparelho cardiovascular;
-            RR 2T ou RCR 2T = ritmo cardíaco regular, em 2 tempos;
-            RCI = ritmo cardíaco irregular;
-            BNF = bulhas normofonéticas;
-            AP = apareho pulmonar;
-            MV = murmúrio vesicular;
-            MVF = murmúrio vesicular fisiológico;
-            SRA = sem ruídos adventícios.
-            MUC= medicações de uso contínuo.
-            NÃO substitua siglas ou abreviações que desconhece. NÃO substitua unidades de medida de resultados laboratoriais. 
+1. Interpretar o conteúdo clínico do texto original, identificando as informações relevantes para cada tópico do MODELO.
 
-        2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
-          - os nomes dos tópicos
-          - a ordem dos tópicos
+   Substituir siglas e abreviações médicas apenas quando houver certeza absoluta do significado.
+   Utilize as seguintes substituições obrigatórias:
+   - ACV: aparelho cardiovascular
+   - RR 2T ou RCR 2T: ritmo cardíaco regular, em dois tempos
+   - RCI: ritmo cardíaco irregular
+   - BNF: bulhas normofonéticas
+   - AP: aparelho pulmonar
+   - MV: murmúrio vesicular
+   - MVF: murmúrio vesicular fisiológico
+   - SRA: sem ruídos adventícios
+   - MUC: medicações de uso contínuo
 
-        3. NÃO criar, inferir ou corrigir informações clínicas.
-          - Não incluir diagnósticos, exames ou condutas que não estejam explicitamente mencionados no texto original.
-          - Se algum tópico do MODELO não tiver informação correspondente no texto original, utilize exatamente o texto:
-            "Não informado no registro original."
+   NÃO substitua siglas desconhecidas.
+   NÃO substitua unidades de medida laboratoriais.
 
-        4. Aprimorar exclusivamente a forma de escrita:
-          - correção gramatical e ortográfica
-          - clareza, concisão e linguagem médica adequada
-          - eliminação de repetições e trechos confusos
-          - sem alterar o significado clínico
+2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
+   - os nomes exatos dos tópicos
+   - a ordem exata dos tópicos
 
-        5. NÃO incluir comentários, explicações ou qualquer texto fora da estrutura solicitada.
+3. NÃO criar, inferir ou corrigir informações clínicas.
+   - Não incluir diagnósticos, exames ou condutas que não estejam explicitamente mencionados no texto original.
+   - Se algum tópico do MODELO não possuir informação correspondente no texto original, utilizar exatamente:
+     "Não informado no registro original."
 
-        6. ### FORMATAÇÃO DE LISTAS EM CAMPOS DE TEXTO
-          Alguns campos do JSON devem representar **listas de itens**, porém mantendo o tipo STRING.
+4. Aprimorar exclusivamente a forma de escrita:
+   - correção gramatical e ortográfica
+   - clareza, concisão e linguagem médica adequada
+   - eliminação de repetições e trechos confusos
+   - sem alterar o significado clínico
 
-          Para esses campos:
-          - Cada item deve ser apresentado em uma nova linha.
-          - Não deixe itens sem pontuação final.
-          - Utilize obrigatoriamente o caractere de quebra de linha "\n" entre os itens.
-          - Não utilizar marcadores como "-", "•" ou numeração.
-          - Não transformar esses campos em arrays.
+5. NÃO incluir comentários, explicações ou qualquer texto fora da estrutura solicitada.
 
-          Os campos que devem seguir este padrão são:
-          - hipóteses diagnósticas
-          - exames complementares
-          - condutas
-          - planos terapêuticos
-          - quaisquer outros campos do modelo do usuário que representem listas clínicas
+---
 
-          EXEMPLO OBRIGATÓRIO DE FORMATAÇÃO:
-          Correto:
-          "HIPÓTESES DIAGNÓSTICAS",
-          "Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda."
+### PASSO OBRIGATÓRIO — CLASSIFICAÇÃO DO CONTEÚDO DO TÓPICO
 
-          Incorreto (NUNCA FAZER):
-          "HIPÓTESES DIAGNÓSTICAS",
-          "Pneumonia comunitária grave\nChoque séptico de foco pulmonar\nInsuficiência respiratória aguda"
+Antes de escrever o conteúdo de cada tópico do MODELO, você DEVE:
 
-        ### FORMATO OBRIGATÓRIO DA RESPOSTA
+1. Determinar se o conteúdo do tópico é:
+   a) Texto narrativo contínuo (ex.: história clínica, exame físico, evolução)
+   OU
+   b) Lista clínica de itens independentes (ex.: hipóteses diagnósticas, exames, condutas, planos terapêuticos)
 
-        Retorne exclusivamente um JSON válido, exatamente neste formato:
+2. Se o tópico for do tipo LISTA CLÍNICA:
+   - Quebrar o conteúdo em itens clínicos independentes.
+   - Cada item deve representar uma única informação clínica.
+   - Cada item DEVE terminar com ponto final ".".
+   - Os itens DEVEM ser unidos em uma STRING única usando o caractere "\n".
 
-        {
-          "evolucao": [
-            {
-              "topico": "NOME_DO_TOPICO_1",
-              "conteudo": "Texto correspondente a este tópico."
-            },
-            {
-              "topico": "NOME_DO_TOPICO_2",
-              "conteudo": "Texto correspondente a este tópico."
-            }
-          ]
-        }
+3. É PROIBIDO retornar conteúdo listável em forma de parágrafo único.
 
-        ### REGRAS IMPORTANTES:
-        - Os valores de "topico" devem ser **idênticos** aos nomes fornecidos no MODELO.
-        - A ordem dos objetos na array "evolucao" deve ser **exatamente a mesma** do MODELO.
-        - Não incluir campos extras.
-        - Não incluir texto fora do JSON.
-        - O JSON deve ser estritamente válido (aspas, vírgulas, colchetes).
+---
 
-      `
+### FORMATAÇÃO OBRIGATÓRIA DE CAMPOS LISTÁVEIS (REGRA CRÍTICA)
+
+Os campos abaixo SEMPRE representam listas clínicas, mesmo que o texto original esteja em parágrafo único:
+
+- hipóteses diagnósticas
+- exames complementares
+- condutas
+- planos terapêuticos
+- problemas
+- diagnósticos
+- quaisquer outros campos do MODELO que representem múltiplos itens clínicos distintos
+
+Regras obrigatórias:
+- Converter o conteúdo em itens independentes.
+- Cada item em nova linha.
+- Cada item DEVE terminar com ponto final ".".
+- Separar itens exclusivamente com "\n".
+- NÃO usar marcadores, hífens, números ou símbolos.
+- NÃO transformar esses campos em arrays.
+- NÃO retornar texto corrido nesses campos.
+
+---
+
+### EXEMPLOS OBRIGATÓRIOS DE FORMATAÇÃO
+
+Campo: "HIPÓTESES DIAGNÓSTICAS"
+
+Correto:
+"Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda."
+
+Incorreto (NUNCA FAZER):
+"Pneumonia comunitária grave\nChoque séptico de foco pulmonar\nInsuficiência respiratória aguda"
+
+Exemplo realista:
+Texto original:
+"Paciente com pneumonia grave, evoluindo com sepse e insuficiência respiratória."
+
+Resposta correta:
+"Pneumonia comunitária grave.\nSepse.\nInsuficiência respiratória aguda."
+
+---
+
+### VERIFICAÇÃO FINAL OBRIGATÓRIA (ANTES DO OUTPUT)
+
+Antes de retornar o JSON final:
+- Revise todos os campos listáveis.
+- Se algum item não terminar com ".", adicione o ponto final.
+- Se um campo listável estiver em parágrafo único, reescreva-o como lista.
+- Somente após essa verificação, retorne a resposta.
+
+---
+
+### FORMATO OBRIGATÓRIO DA RESPOSTA
+
+Retorne exclusivamente um JSON válido, exatamente neste formato:
+
+{
+  "evolucao": [
+    {
+      "topico": "NOME_DO_TOPICO_1",
+      "conteudo": "Texto correspondente a este tópico."
+    },
+    {
+      "topico": "NOME_DO_TOPICO_2",
+      "conteudo": "Texto correspondente a este tópico."
+    }
+  ]
+}
+
+### REGRAS FINAIS:
+- Os valores de "topico" DEVEM ser idênticos aos nomes fornecidos no MODELO.
+- A ordem dos objetos na array "evolucao" DEVE ser exatamente a mesma do MODELO.
+- NÃO incluir campos extras.
+- NÃO incluir texto fora do JSON.
+- O JSON DEVE ser estritamente válido.
+`
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
