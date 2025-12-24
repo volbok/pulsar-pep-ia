@@ -465,11 +465,16 @@ app.post("/quickmedpersonal", async (req, res) => {
           - planos terapêuticos
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
-          MODELO CORRETO DE CRIAR AS LISTAS:
+          EXEMPLO OBRIGATÓRIO DE FORMATAÇÃO:
+          Correto:
           "HIPÓTESES DIAGNÓSTICAS",
-          "Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda.
-        
-          ### FORMATO OBRIGATÓRIO DA RESPOSTA
+          "Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda."
+
+          Incorreto (NUNCA FAZER):
+          "HIPÓTESES DIAGNÓSTICAS",
+          "Pneumonia comunitária grave\nChoque séptico de foco pulmonar\nInsuficiência respiratória aguda"
+
+        ### FORMATO OBRIGATÓRIO DA RESPOSTA
 
         Retorne exclusivamente um JSON válido, exatamente neste formato:
 
@@ -479,6 +484,10 @@ app.post("/quickmedpersonal", async (req, res) => {
               "topico": "NOME_DO_TOPICO_1",
               "conteudo": "Texto correspondente a este tópico."
             },
+            {
+              "topico": "NOME_DO_TOPICO_2",
+              "conteudo": "Texto correspondente a este tópico."
+            }
           ]
         }
 
