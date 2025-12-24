@@ -449,10 +449,17 @@ app.post("/quickmedpersonal", async (req, res) => {
         5. NÃO incluir comentários, explicações ou qualquer texto fora da estrutura solicitada.
 
         6. ### FORMATAÇÃO DE LISTAS EM CAMPOS DE TEXTO
-          Alguns campos do JSON devem representar **listas de itens**, porém mantendo o tipo STRING.
+          Sempre que um campo do JSON for definido como conteúdo listável (ex.: hipóteses diagnósticas, 
+          condutas, problemas, plano terapêutico, prescrições, recomendações), o conteúdo deve ser retornado como string única,
+          com itens separados por quebra de linha (\n), e cada item deve obrigatoriamente terminar com ponto final (.).
+
+          Não utilize marcadores (•, -, números).
+          Não deixe itens sem pontuação final.
+          Não utilize ponto e vírgula.
 
           Para esses campos:
-          - Cada item deve ser apresentado em uma nova linha e SEMPRE deve terminar com pontuação final.
+          - Cada item deve ser apresentado em uma nova linha.
+          - Não deixe itens sem pontuação final.
           - Utilize obrigatoriamente o caractere de quebra de linha "\n" entre os itens.
           - Não utilizar marcadores como "-", "•" ou numeração.
           - Não transformar esses campos em arrays.
@@ -464,8 +471,10 @@ app.post("/quickmedpersonal", async (req, res) => {
           - planos terapêuticos
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
-          Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
-          "Exemplo de item 1\nExemplo de item 2\nExemplo de item 3"
+          Exemplo correto de conteúdo listável:
+
+          "Hipoteses_diagnosticas": 
+          "Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda."
 
         ---
 
