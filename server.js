@@ -393,113 +393,114 @@ app.post("/quickmedpersonal", async (req, res) => {
     }
 
     const prompt =
-      `Leia integralmente este prompt antes de gerar a resposta.
+      `
+      Leia integralmente este prompt antes de gerar a resposta.
 
-Você é um médico experiente, com amplo domínio de documentação clínica, prontuário eletrônico e diferentes estilos de evolução médica hospitalar.
+      Você é um médico experiente, com amplo domínio de documentação clínica, prontuário eletrônico e diferentes estilos de evolução médica hospitalar.
 
-Você receberá:
-1) Um texto bruto de evolução médica, copiado diretamente de um prontuário eletrônico, contendo informações possivelmente desorganizadas, repetidas ou fora de ordem.
-2) Um MODELO DE EVOLUÇÃO definido pelo usuário, que determina:
-   - os nomes dos tópicos
-   - a ordem dos tópicos
-   - o estilo da evolução
+      Você receberá:
+      1) Um texto bruto de evolução médica, copiado diretamente de um prontuário eletrônico, contendo informações possivelmente desorganizadas, repetidas ou fora de ordem.
+      2) Um MODELO DE EVOLUÇÃO definido pelo usuário, que determina:
+        - os nomes dos tópicos
+        - a ordem dos tópicos
+        - o estilo da evolução
 
-========================
-TEXTO ORIGINAL DA EVOLUÇÃO:
-${texto}
-========================
+      ========================
+      TEXTO ORIGINAL DA EVOLUÇÃO:
+      ${texto}
+      ========================
 
-========================
-MODELO DE EVOLUÇÃO DESEJADO:
-${modelo}
-========================
+      ========================
+      MODELO DE EVOLUÇÃO DESEJADO:
+      ${modelo}
+      ========================
 
-### SUA TAREFA:
+      ### SUA TAREFA:
 
-1. Interpretar o conteúdo clínico do texto original, identificando as informações relevantes para cada tópico do MODELO.
+      1. Interpretar o conteúdo clínico do texto original, identificando as informações relevantes para cada tópico do MODELO.
 
-   Substituir siglas e abreviações médicas apenas quando houver certeza absoluta do significado.
-   Utilize as seguintes substituições obrigatórias:
-   - ACV: aparelho cardiovascular
-   - RR 2T ou RCR 2T: ritmo cardíaco regular, em dois tempos
-   - RCI: ritmo cardíaco irregular
-   - BNF: bulhas normofonéticas
-   - AP: aparelho pulmonar
-   - MV: murmúrio vesicular
-   - MVF: murmúrio vesicular fisiológico
-   - SRA: sem ruídos adventícios
-   - MUC: medicações de uso contínuo
+        Substituir siglas e abreviações médicas apenas quando houver certeza absoluta do significado.
+        Utilize as seguintes substituições obrigatórias:
+        - ACV: aparelho cardiovascular
+        - RR 2T ou RCR 2T: ritmo cardíaco regular, em dois tempos
+        - RCI: ritmo cardíaco irregular
+        - BNF: bulhas normofonéticas
+        - AP: aparelho pulmonar
+        - MV: murmúrio vesicular
+        - MVF: murmúrio vesicular fisiológico
+        - SRA: sem ruídos adventícios
+        - MUC: medicações de uso contínuo
 
-   NÃO substitua siglas desconhecidas.
-   NÃO substitua unidades de medida laboratoriais.
+        NÃO substitua siglas desconhecidas.
+        NÃO substitua unidades de medida laboratoriais.
 
-2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
-   - os nomes exatos dos tópicos
-   - a ordem exata dos tópicos
+      2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
+        - os nomes exatos dos tópicos
+        - a ordem exata dos tópicos
 
-3. NÃO criar, inferir ou corrigir informações clínicas.
-   - Não incluir diagnósticos, exames ou condutas que não estejam explicitamente mencionados no texto original.
-   - Se algum tópico do MODELO não possuir informação correspondente no texto original, utilizar exatamente:
-     "Não informado no registro original."
+      3. NÃO criar, inferir ou corrigir informações clínicas.
+        - Não incluir diagnósticos, exames ou condutas que não estejam explicitamente mencionados no texto original.
+        - Se algum tópico do MODELO não possuir informação correspondente no texto original, utilizar exatamente:
+          "Não informado no registro original."
 
-4. Aprimorar exclusivamente a forma de escrita:
-   - correção gramatical e ortográfica
-   - clareza, concisão e linguagem médica adequada
-   - eliminação de repetições e trechos confusos
-   - sem alterar o significado clínico
+      4. Aprimorar exclusivamente a forma de escrita:
+        - correção gramatical e ortográfica
+        - clareza, concisão e linguagem médica adequada
+        - eliminação de repetições e trechos confusos
+        - sem alterar o significado clínico
 
-5. NÃO incluir comentários, explicações ou qualquer texto fora da estrutura solicitada.
+      5. NÃO incluir comentários, explicações ou qualquer texto fora da estrutura solicitada.
 
----
+      ---
 
-### PASSO OBRIGATÓRIO — CLASSIFICAÇÃO DO CONTEÚDO DO TÓPICO
+      ### PASSO OBRIGATÓRIO — CLASSIFICAÇÃO DO CONTEÚDO DO TÓPICO
 
-Antes de escrever o conteúdo de cada tópico do MODELO, você DEVE:
+      Antes de escrever o conteúdo de cada tópico do MODELO, você DEVE:
 
-1. Determinar se o conteúdo do tópico é:
-   a) Texto narrativo contínuo (ex.: história clínica, exame físico, evolução)
-   OU
-   b) Lista clínica de itens independentes (ex.: hipóteses diagnósticas, exames, condutas, planos terapêuticos)
+      1. Determinar se o conteúdo do tópico é:
+        a) Texto narrativo contínuo (ex.: história clínica, exame físico, evolução)
+        OU
+        b) Lista clínica de itens independentes (ex.: hipóteses diagnósticas, exames, condutas, planos terapêuticos)
 
-2. Se o tópico for do tipo LISTA CLÍNICA, classificar o tópico como lista. Do contrário, classificar como texto.
+      2. Se o tópico for do tipo LISTA CLÍNICA, classificar o tópico como lista. Do contrário, classificar como texto.
 
-Os campos abaixo SEMPRE representam listas clínicas, mesmo que o texto original esteja em parágrafo único:
-- hipóteses diagnósticas
-- exames complementares
-- condutas
-- planos terapêuticos
-- problemas
-- diagnósticos
-- quaisquer outros campos do MODELO que representem múltiplos itens clínicos distintos
+      Os campos abaixo SEMPRE representam listas clínicas, mesmo que o texto original esteja em parágrafo único:
+      - hipóteses diagnósticas
+      - exames complementares
+      - condutas
+      - planos terapêuticos
+      - problemas
+      - diagnósticos
+      - quaisquer outros campos do MODELO que representem múltiplos itens clínicos distintos
 
----
+      ---
 
-### FORMATO OBRIGATÓRIO DA RESPOSTA
+      ### FORMATO OBRIGATÓRIO DA RESPOSTA
 
-Retorne exclusivamente um JSON válido, exatamente neste formato:
+      Retorne exclusivamente um JSON válido, exatamente neste formato:
 
-{
-  "evolucao": [
-    {
-      "topico": "NOME_DO_TOPICO_1",
-      "conteudo": ["item 1 da lista", "item 2 da lista"]
-      "classificacao": "lista"
-    },
-    {
-      "topico": "NOME_DO_TOPICO_2",
-      "conteudo": "Texto correspondente a este tópico."
-      "classificacao": "texto"
-    }
-  ]
-}
+      {
+        "evolucao": [
+          {
+            "topico": "NOME_DO_TOPICO_1",
+            "conteudo": ["item 1 da lista", "item 2 da lista"]
+            "classificacao": "lista"
+          },
+          {
+            "topico": "NOME_DO_TOPICO_2",
+            "conteudo": "Texto correspondente a este tópico."
+            "classificacao": "texto"
+          }
+        ]
+      }
 
-### REGRAS FINAIS:
-- Os valores de "topico" DEVEM ser idênticos aos nomes fornecidos no MODELO.
-- A ordem dos objetos na array "evolucao" DEVE ser exatamente a mesma do MODELO.
-- NÃO incluir campos extras.
-- NÃO incluir texto fora do JSON.
-- O JSON DEVE ser estritamente válido.
-`
+      ### REGRAS FINAIS:
+      - Os valores de "topico" DEVEM ser idênticos aos nomes fornecidos no MODELO.
+      - A ordem dos objetos na array "evolucao" DEVE ser exatamente a mesma do MODELO.
+      - NÃO incluir campos extras.
+      - NÃO incluir texto fora do JSON.
+      - O JSON DEVE ser estritamente válido.
+      `
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
