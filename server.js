@@ -465,7 +465,11 @@ app.post("/quickmedpersonal", async (req, res) => {
           - planos terapêuticos
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
-        ### FORMATO OBRIGATÓRIO DA RESPOSTA
+          MODELO CORRETO DE CRIAR AS LISTAS:
+          "HIPÓTESES DIAGNÓSTICAS",
+          "Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda.
+        
+          ### FORMATO OBRIGATÓRIO DA RESPOSTA
 
         Retorne exclusivamente um JSON válido, exatamente neste formato:
 
