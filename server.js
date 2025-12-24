@@ -463,9 +463,6 @@ app.post("/quickmedpersonal", async (req, res) => {
           - condutas
           - planos terapêuticos
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
-
-          Para campos relacionados ao exame físico, procurar fragmentar e listar o conteúdo conforme o aparelho ou sistema
-          examinado (aparelho cardiovascular, respiratório, exame neurologico, exame do abdome, etc.).
           
           Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
           "Exemplo de item 1.\nExemplo de item 2.\nExemplo de item 3."
