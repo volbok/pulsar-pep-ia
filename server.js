@@ -745,7 +745,7 @@ app.post("/quickmedprescricao", async (req, res) => {
       - NÃO criar diagnósticos não descritos.
       - NÃO individualizar doses por peso, idade extrema ou função renal, salvo se informado.
       - NÃO incluir medicamentos claramente contraindicados.
-      - Sempre iniciar o nome do item prescrito com letra maiúscula.
+      - Sempre escrever os itens de prescrição com letra inicial maiúscula.
       - NÃO incluir comentários, explicações ou textos fora do JSON.
       - O JSON deve ser estritamente válido.
 
