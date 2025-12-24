@@ -458,9 +458,12 @@ app.post("/quickmedpersonal", async (req, res) => {
         ### REGRAS IMPORTANTES:
         - Os valores de "topico" devem ser **idênticos** aos nomes fornecidos no MODELO.
         - A ordem dos objetos na array "evolucao" deve ser **exatamente a mesma** do MODELO.
-        - Hipóteses diagnósticas devem ser apresentadas uma abaixo da outra, como uma lista.
-        - Resultados de exames devem ser apresentados um abaixo do outro, como uma lista.
-        - Condutas devem ser apresentadas uma abaixo da outra, como uma lista.
+        - Dentro de cada tópico de evolução, separar itens diferentes do conteúdo com quebras de linha dentro da string.
+        Exemplo:
+        tópico: "RESULTADOS DE EXAMES",
+        conteúdo:
+        "hemoglobina: 12 mg/dl"
+        "ureia: 50"
         - Não incluir campos extras.
         - Não incluir texto fora do JSON.
         - O JSON deve ser estritamente válido (aspas, vírgulas, colchetes).
