@@ -589,7 +589,7 @@ app.post("/quickmedprescricao", async (req, res) => {
 
       - **dados_vitais**  
         Utilize linguagem hospitalar padrão brasileira  
-        (ex.: “Aferir FC, FR, PA, SpO₂ e temperatura a cada 6–12h”).
+        (ex.: “aferir FC, FR, PA, SpO₂ e temperatura a cada 6–12h”).
 
       - **analgesia**  
         Sugira 2 ou 3 opções usuais no Brasil, como:  
