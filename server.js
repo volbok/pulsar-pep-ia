@@ -463,7 +463,7 @@ app.post("/quickmedpersonal", async (req, res) => {
           - condutas
           - planos terapêuticos
           - quaisquer outros campos do modelo do usuário que representem listas clínicas
-          
+
           Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
           "Exemplo de item 1.\nExemplo de item 2.\nExemplo de item 3."
 
