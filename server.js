@@ -722,7 +722,7 @@ app.post("/quickmedprescricao", async (req, res) => {
         - anticonvulsivantes
 
         Cada item deve conter:
-        - APENAS o nome do princípio ativo do medicamento (não informar a classe, tipo ou grupo de droga)
+        - nome do medicamento
         - posologia usual em adultos
 
 
