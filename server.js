@@ -418,18 +418,18 @@ app.post("/quickmedpersonal", async (req, res) => {
         ### SUA TAREFA:
 
         1. Interpretar o conteúdo clínico do texto original, identificando as informações relevantes para cada tópico do MODELO.
-          Substituir siglas e abreviações de termos médicos encontrados na string "texto", quando identificáveis com certeza. Abaixo tem uma lista
-          de siglas e abreviações que precisam ser substituidas por expressões completas:
-          ACV: aparelho cardiovascular;
-          RR 2T ou RCR 2T = ritmo cardíaco regular, em 2 tempos;
-          RCI = ritmo cardíaco irregular;
-          BNF = bulhas normofonéticas;
-          AP = apareho pulmonar;
-          MV = murmúrio vesicular;
-          MVF = murmúrio vesicular fisiológico;
-          SRA = sem ruídos adventícios.
-          MUC= medicações de uso contínuo.
-          NÃO substitua siglas ou abreviações que desconhece.
+            Substituir siglas e abreviações de termos médicos encontrados na string "texto", quando identificáveis com certeza. Abaixo tem uma lista
+            de siglas e abreviações que precisam ser substituidas por expressões completas:
+            ACV: aparelho cardiovascular;
+            RR 2T ou RCR 2T = ritmo cardíaco regular, em 2 tempos;
+            RCI = ritmo cardíaco irregular;
+            BNF = bulhas normofonéticas;
+            AP = apareho pulmonar;
+            MV = murmúrio vesicular;
+            MVF = murmúrio vesicular fisiológico;
+            SRA = sem ruídos adventícios.
+            MUC= medicações de uso contínuo.
+            NÃO substitua siglas ou abreviações que desconhece.
 
         2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
           - os nomes dos tópicos
@@ -449,22 +449,22 @@ app.post("/quickmedpersonal", async (req, res) => {
         5. NÃO incluir comentários, explicações ou qualquer texto fora da estrutura solicitada.
 
         6. ### FORMATAÇÃO DE LISTAS EM CAMPOS DE TEXTO
-        Alguns campos do JSON devem representar **listas de itens**, porém mantendo o tipo STRING.
+          Alguns campos do JSON devem representar **listas de itens**, porém mantendo o tipo STRING.
 
-        Para esses campos:
-        - Cada item deve ser apresentado em uma nova linha.
-        - Utilize obrigatoriamente o caractere de quebra de linha "\n" entre os itens.
-        - Não utilizar marcadores como "-", "•" ou numeração.
-        - Não transformar esses campos em arrays.
+          Para esses campos:
+          - Cada item deve ser apresentado em uma nova linha e receber um ponto em seu final.
+          - Utilize obrigatoriamente o caractere de quebra de linha "\n" entre os itens.
+          - Não utilizar marcadores como "-", "•" ou numeração.
+          - Não transformar esses campos em arrays.
 
-        Os campos que devem seguir este padrão são:
-        - hipóteses diagnósticas
-        - condutas
-        - planos terapêuticos
-        - quaisquer outros campos do modelo do usuário que representem listas clínicas
+          Os campos que devem seguir este padrão são:
+          - hipóteses diagnósticas
+          - condutas
+          - planos terapêuticos
+          - quaisquer outros campos do modelo do usuário que representem listas clínicas
 
-        Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
-        "Exemplo de item 1\nExemplo de item 2\nExemplo de item 3"
+          Exemplo de conteúdo válido para um campo do tipo string com múltiplos itens:
+          "Exemplo de item 1\nExemplo de item 2\nExemplo de item 3"
 
         ---
 
