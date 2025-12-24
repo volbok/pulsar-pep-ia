@@ -418,6 +418,18 @@ app.post("/quickmedpersonal", async (req, res) => {
         ### SUA TAREFA:
 
         1. Interpretar o conteúdo clínico do texto original, identificando as informações relevantes para cada tópico do MODELO.
+          Substituir siglas e abreviações de termos médicos encontrados na string "texto", quando identificáveis com certeza. Abaixo tem uma lista
+          de siglas e abreviações que precisam ser substituidas por expressões completas:
+          ACV: aparelho cardiovascular;
+          RR 2T ou RCR 2T = ritmo cardíaco regular, em 2 tempos;
+          RCI = ritmo cardíaco irregular;
+          BNF = bulhas normofonéticas;
+          AP = apareho pulmonar;
+          MV = murmúrio vesicular;
+          MVF = murmúrio vesicular fisiológico;
+          SRA = sem ruídos adventícios.
+          MUC= medicações de uso contínuo.
+          NÃO substitua siglas ou abreviações que desconhece.
 
         2. Remodelar a evolução médica conforme o MODELO fornecido, respeitando rigorosamente:
           - os nomes dos tópicos
