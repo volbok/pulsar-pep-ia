@@ -467,7 +467,6 @@ app.post("/quickmedpersonal", async (req, res) => {
       Os campos abaixo SEMPRE representam listas clínicas, mesmo que o texto original esteja em parágrafo único:
       - hipóteses diagnósticas
       - exame físico
-      - exames complementares
       - condutas
       - planos terapêuticos
       - problemas
