@@ -490,9 +490,9 @@ app.post("/quickmedpersonal", async (req, res) => {
               "conteudo": "Texto correspondente a este tópico."
             },
             {
-              "topico": "NOME_DO_TOPICO_2",
-              "conteudo": "Texto correspondente a este tópico."
-            }
+              "topico": "HIPÓTESES DIAGNÓSTICAS",
+              "conteudo": "Pneumonia comunitária grave.\nChoque séptico de foco pulmonar.\nInsuficiência respiratória aguda."
+            },
           ]
         }
 
@@ -501,7 +501,6 @@ app.post("/quickmedpersonal", async (req, res) => {
         - A ordem dos objetos na array "evolucao" deve ser **exatamente a mesma** do MODELO.
         - Não incluir campos extras.
         - Não incluir texto fora do JSON.
-        - Os itens das listas SEMPRE devem ter ponto final. Se não pontuados, 
         - O JSON deve ser estritamente válido (aspas, vírgulas, colchetes).
 
       `
