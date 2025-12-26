@@ -104,19 +104,48 @@ app.post("/doia", async (req, res) => {
     5. É EXPRESSAMENTE PROIBIDO incluir fatores de risco isolados ou doenças crônicas preexistentes (ex: obesidade, hipertensão, diabetes).
       na Parte I.
     
-    6. REGRA IMPORTANTE: Não inclua na Parte I nem na Parte II resultados ou descrições de exames, apenas use-os na interpretação do caso. 
-    
-    7. A Parte II deve conter APENAS condições clínicas relevantes que contribuíram para o óbito,
+    6. A Parte II deve conter APENAS condições clínicas relevantes que contribuíram para o óbito,
     mas que NÃO fazem parte direta da cadeia causal.
+
+    ### REGRA CLÍNICA CRÍTICA — DOENÇAS CRÔNICAS NA DECLARAÇÃO DE ÓBITO
+    Doenças crônicas NÃO devem ser utilizadas como causas da cadeia causal direta da morte (Parte I), exceto quando forem claramente o evento terminal responsável pelo óbito.
+
+    São consideradas DOENÇAS CRÔNICAS CONTRIBUINTES, devendo ser listadas EXCLUSIVAMENTE na Parte II da Declaração de Óbito, quando presentes:
+    - Diabetes mellitus (tipo 1 ou tipo 2)
+    - Hipertensão arterial sistêmica
+    - Dislipidemia
+    - Obesidade
+    - Doença renal crônica
+    - Doença pulmonar obstrutiva crônica
+    - Insuficiência cardíaca crônica
+    - Doença arterial coronariana crônica
+    - Cirrose hepática compensada
+    - Demência
+    - Outras comorbidades crônicas estáveis
+
+    É PROIBIDO listar essas condições na Parte I se:
+    - houver um evento infeccioso agudo (ex.: pneumonia, sepse),
+    - houver falência orgânica aguda,
+    - ou houver um diagnóstico agudo claramente responsável pelo óbito.
+
+    Nesses casos, essas condições DEVEM ser alocadas na Parte II como condições contribuintes.
+
+    EXCEÇÃO:
+    Somente é permitido incluir diabetes mellitus na Parte I se o quadro clínico indicar explicitamente:
+    - Cetoacidose diabética
+    - Estado hiperosmolar hiperglicêmico
+    - Hipoglicemia grave como causa direta do óbito
+
+    Na ausência explícita dessas situações, diabetes mellitus NUNCA deve constar na Parte I.
     
-    8. Quando o diagnóstico não for confirmado, utilize termos como:
+    7. Quando o diagnóstico não for confirmado, utilize termos como:
     "suspeito", "provável" ou "presumido", mantendo coerência clínica.
     
-    9. Não utilize siglas.
+    8. Não utilize siglas.
     
-    10. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
+    9. Utilize linguagem médica clara, objetiva e compatível com a prática brasileira.
     
-    11. Se a causa não puder ser determinada com segurança,
+    10. Se a causa não puder ser determinada com segurança,
         declare causa mal definida e justifique a limitação clínica.
     
     ### FORMATO DE SAÍDA (OBRIGATÓRIO):
@@ -142,8 +171,7 @@ app.post("/doia", async (req, res) => {
 
     - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências.
       Nunca coloque parada cardiorrespiratória ou insuficiência respiratória na resposta!
-      Nunca coloque doenças crônicas na Parte I, a menos que tenham contribuído diretamente para a morte.
-      Sepse, septicemia e choque SEMPRE devem ser a causa imediata da morte (primeiro item da Parte I).
+
      `
 
     const completion = await openai.chat.completions.create({
