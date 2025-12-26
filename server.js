@@ -104,7 +104,7 @@ app.post("/doia", async (req, res) => {
     5. Não inclua fatores de risco isolados ou doenças crônicas preexistentes (ex: obesidade, hipertensão, diabetes).
       na Parte I, a menos que sejam diretamente responsáveis pela morte.
     
-    6. Não inclua na Parte I nem na Parte II resultados ou descrições de exames, apenas use-os na interpretação do caso. 
+    6. REGRA IMPORTANTE: Não inclua na Parte I nem na Parte II resultados ou descrições de exames, apenas use-os na interpretação do caso. 
     
     7. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
     mas que NÃO fazem parte direta da cadeia causal.
@@ -142,6 +142,7 @@ app.post("/doia", async (req, res) => {
 
     - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências.
       Nunca coloque parada cardiorrespiratória ou insuficiência respiratória na resposta!
+      Nunca coloque doenças crônicas na Parte I, a menos que tenham contribuído diretamente para a morte.
 
      `
 
