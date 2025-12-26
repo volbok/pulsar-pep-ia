@@ -121,14 +121,8 @@ app.post("/doia", async (req, res) => {
     - Doença arterial coronariana crônica
     - Cirrose hepática compensada
     - Demência
+    - Doença de Alzheimer
     - Outras comorbidades crônicas estáveis
-
-    É PROIBIDO listar essas condições na Parte I se:
-    - houver um evento infeccioso agudo (ex.: pneumonia, sepse),
-    - houver falência orgânica aguda,
-    - ou houver um diagnóstico agudo claramente responsável pelo óbito.
-
-    Nesses casos, essas condições DEVEM ser alocadas na Parte II como condições contribuintes.
 
     EXCEÇÃO:
     Somente é permitido incluir diabetes mellitus na Parte I se o quadro clínico indicar explicitamente:
@@ -137,6 +131,26 @@ app.post("/doia", async (req, res) => {
     - Hipoglicemia grave como causa direta do óbito
 
     Na ausência explícita dessas situações, diabetes mellitus NUNCA deve constar na Parte I.
+
+    EXEMPLO:
+
+    Texto clínico:
+    "Portador de HAS, diabetes mellitus, dislipidemia e doença de Alzheimer.
+    Quadro de pneumonia, evoluindo para sepse.
+    Evoluiu para óbito."
+
+    Preenchimento CORRETO:
+
+    Parte I:
+    a) Choque séptico.
+    b) Sepse de foco pulmonar.
+    c) Pneumonia.
+
+    Parte II:
+    Doença de Alzheimer.
+    Diabetes mellitus.
+    Hipertensão arterial sistêmica.
+    Dislipidemia.
     
     7. Quando o diagnóstico não for confirmado, utilize termos como:
     "suspeito", "provável" ou "presumido", mantendo coerência clínica.
