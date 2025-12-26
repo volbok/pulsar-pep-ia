@@ -101,12 +101,12 @@ app.post("/doia", async (req, res) => {
     - A última linha da Parte I é SEMPRE a causa básica.
     A causa básica é o evento que iniciou a cadeia que levou ao óbito. 
     
-    5. Não inclua fatores de risco isolados ou doenças crônicas preexistentes (ex: obesidade, hipertensão, diabetes).
-      na Parte I, a menos que sejam diretamente responsáveis pela morte.
+    5. É EXPRESSAMENTE PROIBIDO incluir fatores de risco isolados ou doenças crônicas preexistentes (ex: obesidade, hipertensão, diabetes).
+      na Parte I.
     
     6. REGRA IMPORTANTE: Não inclua na Parte I nem na Parte II resultados ou descrições de exames, apenas use-os na interpretação do caso. 
     
-    7. A Parte II deve conter condições clínicas relevantes que contribuíram para o óbito,
+    7. A Parte II deve conter APENAS condições clínicas relevantes que contribuíram para o óbito,
     mas que NÃO fazem parte direta da cadeia causal.
     
     8. Quando o diagnóstico não for confirmado, utilize termos como:
@@ -143,7 +143,7 @@ app.post("/doia", async (req, res) => {
     - Antes de entregar a resposta, revise se a mesma cumpre todas as regras acima definidas e corrija inconsistências.
       Nunca coloque parada cardiorrespiratória ou insuficiência respiratória na resposta!
       Nunca coloque doenças crônicas na Parte I, a menos que tenham contribuído diretamente para a morte.
-
+      Sepse, septicemia e choque SEMPRE devem ser a causa imediata da morte (primeiro item da Parte I).
      `
 
     const completion = await openai.chat.completions.create({
@@ -431,6 +431,8 @@ app.post("/quickmedpersonal", async (req, res) => {
         - MVF: murmúrio vesicular fisiológico
         - SRA: sem ruídos adventícios
         - MUC: medicações de uso contínuo
+        - MMII: membros inferiores.
+        - MMSS: membros superiores.
 
         NÃO substitua siglas desconhecidas.
         NÃO substitua unidades de medida laboratoriais.
@@ -475,6 +477,7 @@ app.post("/quickmedpersonal", async (req, res) => {
       - quaisquer outros campos do MODELO que representem múltiplos itens clínicos distintos
 
       Os campos abaixo SEMPRE devem ser retornados como texto contínuo:
+      - medicações de uso contínuo, medicações prévias.
       - exames laboratoriais.
 
       ---
