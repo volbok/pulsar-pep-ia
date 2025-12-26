@@ -474,6 +474,9 @@ app.post("/quickmedpersonal", async (req, res) => {
       - diagnósticos
       - quaisquer outros campos do MODELO que representem múltiplos itens clínicos distintos
 
+      Os campos abaixo SEMPRE devem ser retornados como texto contínuo:
+      - exames laboratoriais.
+
       ---
 
       ### FORMATO OBRIGATÓRIO DA RESPOSTA
