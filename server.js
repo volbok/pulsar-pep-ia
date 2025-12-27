@@ -812,6 +812,62 @@ app.post("/quickmedprescricao", async (req, res) => {
 
 });
 
+// extração resultados de exames de um pdf.
+app.post("/quickmedexames", async (req, res) => {
+  const texto_bruto = JSON.stringify(req.body);
+  const texto = texto_bruto;
+  try {
+
+    if (!texto) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt = `
+    Você é um assistente médico especializado em interpretação de exames laboratoriais.
+
+    A partir do texto bruto abaixo, extraia APENAS os exames laboratoriais e retorne
+    um JSON estruturado seguindo rigorosamente este formato:
+
+    {
+      "exames": [
+        {
+          "nome": "",
+          "valor": "",
+          "unidade": "",
+          "referencia": "",
+          "observacao": "normal | alterado | ausente"
+        }
+      ]
+    }
+
+    Regras:
+    - Não invente exames
+    - Se algum campo não estiver presente, use null
+    - Ignore cabeçalhos, rodapés, dados administrativos
+    - Não escreva nada fora do JSON
+
+    Texto:
+    <<<
+    ${texto}
+    >>>
+    `
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar medicações." });
+  }
+
+
+});
+
 // POST /api/medicamentos
 // api key.
 app.post("/receita", async (req, res) => {
