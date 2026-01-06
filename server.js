@@ -868,8 +868,120 @@ app.post("/quickmedexames", async (req, res) => {
 
 });
 
+// endpoint para aprimorar evolução criada por voz.
+app.post("/quickmedevolux", async (req, res) => {
+  const texto_bruto = JSON.stringify(req.body);
+  const texto = texto_bruto;
+  try {
+
+    if (!texto) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt = `
+      Leia integralmente este prompt antes de gerar a resposta.
+
+      Você é um profissional de saúde experiente, com domínio de documentação clínica, evolução médica e evolução de enfermagem, habituado a registros feitos por ditado de voz durante plantões hospitalares.
+
+      Você receberá um TEXTO BRUTO, obtido por transcrição de voz, que contém obrigatoriamente:
+      - o nome do paciente (informado explicitamente por voz)
+      - a descrição da evolução clínica ou de enfermagem
+
+      O texto pode conter:
+      - erros ortográficos
+      - frases incompletas
+      - repetições
+      - termos leigos
+      - falta de pontuação
+      - ordem confusa das ideias
+
+      ========================
+      TEXTO TRANSCRITO POR VOZ:
+      ${texto}
+      ========================
+
+      ### SUA TAREFA:
+
+      1. Identificar corretamente o **NOME DO PACIENTE**, conforme informado no texto.
+        - O nome do paciente é obrigatório.
+        - Utilize exatamente o nome mencionado, apenas corrigindo erros ortográficos evidentes.
+        - Não invente nomes.
+        - Se houver mais de um nome citado, utilize aquele claramente indicado como paciente.
+
+      2. Aprimorar o restante do texto, transformando-o em uma **evolução clínica clara, coerente e profissional**, adequada para prontuário eletrônico.
+
+      3. Corrigir:
+        - ortografia
+        - gramática
+        - pontuação
+        - concordância verbal e nominal
+
+      4. Melhorar a coerência e fluidez:
+        - organizar frases
+        - eliminar repetições
+        - tornar o texto objetivo e compreensível
+
+      5. Substituir termos leigos por termos técnicos adequados, quando possível, sem alterar o significado clínico.
+        Exemplos:
+        - “falta de ar” → “dispneia”
+        - “pressão baixa” → “hipotensão”
+        - “pressão alta” → “hipertensão”
+        - “febre” → “hipertermia”
+        - “batimento acelerado” → “taquicardia”
+        - “saturação baixa” → “hipoxemia”
+
+      6. **NÃO criar informações novas.**
+        - Não acrescentar diagnósticos não mencionados.
+        - Não inferir condutas.
+        - Não sugerir tratamentos.
+        - Não incluir exames, sinais vitais ou dados não citados.
+
+      7. Manter fidelidade absoluta ao conteúdo original.
+        - Apenas reorganizar e melhorar a forma de escrita.
+        - O significado clínico deve permanecer exatamente o mesmo.
+
+      8. Adequar o tom profissional conforme o conteúdo:
+        - Se compatível com evolução médica, utilizar linguagem médica.
+        - Se compatível com evolução de enfermagem, utilizar linguagem de enfermagem.
+        - Nunca extrapolar atribuições profissionais.
+
+      ---
+
+      ### FORMATO OBRIGATÓRIO DA RESPOSTA
+
+      Retorne **exclusivamente** um JSON válido, exatamente neste formato:
+
+      {
+        "paciente": "Nome completo do paciente",
+        "evolucao": "Texto final da evolução clínica aprimorada."
+      }
+
+      ### REGRAS FINAIS:
+      - O campo "paciente" é obrigatório.
+      - O campo "evolucao" deve conter apenas o texto final organizado.
+      - Não incluir comentários, explicações ou texto fora do JSON.
+      - O JSON deve ser estritamente válido.
+
+    `
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar medicações." });
+  }
+
+
+});
+
+// ## ENDPOINT MAGNÍFICA USADA NO PULSAR CONSULTÓRIOS! MÃO DELETAR! ## //
 // POST /api/medicamentos
-// api key.
 app.post("/receita", async (req, res) => {
   try {
     const { texto } = req.body;
