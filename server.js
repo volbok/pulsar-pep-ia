@@ -958,8 +958,10 @@ app.post("/quickmedevolux", async (req, res) => {
 
       ### REGRAS FINAIS:
       - O campo "paciente" é obrigatório.
-      - O campo "evolucao" deve conter apenas o texto final organizado.
+      - O campo "evolucao" deve conter apenas o texto final organizado. Não repetir o nome do paciente na evolução.
       - Não incluir comentários, explicações ou texto fora do JSON.
+      - identificar dados vitais (pressão arterial, frequencia cardíaca, frequência respiratória, saturação de oxigênio e temperatura), reorganizando-os nesta ordem e retornando-os em linha.
+      - Identificar informações do exame físico (aparelho cardiovascular, aparelho respiratório, abdome, extremidades, pele, exame neurológico, etc.), reorganizando-os em uma lista.
       - O JSON deve ser estritamente válido.
 
     `
