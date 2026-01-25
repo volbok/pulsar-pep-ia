@@ -960,7 +960,8 @@ app.post("/quickmedevolux", async (req, res) => {
       - O campo "paciente" é obrigatório.
       - O campo "evolucao" deve conter apenas o texto final organizado. Não repetir o nome do paciente na evolução.
       - Não incluir comentários, explicações ou texto fora do JSON.
-      - identificar dados vitais (pressão arterial, frequencia cardíaca, frequência respiratória, saturação de oxigênio e temperatura), reorganizando-os nesta ordem e retornando-os em linha.
+      - Identificar dados vitais (pressão arterial, frequencia cardíaca, frequência respiratória, saturação de oxigênio e temperatura), reorganizando-os nesta ordem e retornando-os em linha.
+      - Usar abreviações PA para pressão arterial, FC para frequência cardíaca, FR para frequência respiratória, SATO2 para saturação de oxigênio e TAX para temperatura.
       - Identificar informações do exame físico (aparelho cardiovascular, aparelho respiratório, abdome, extremidades, pele, exame neurológico, etc.), reorganizando-os em uma lista.
       - O JSON deve ser estritamente válido.
 
