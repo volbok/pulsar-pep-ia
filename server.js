@@ -1035,7 +1035,7 @@ gere um JSON descrevendo a interação na propriedade "interação", como exempl
 // ## ENDPOINT PARA GERAR EVOLUÇÕES DE CTI (usada na aplicação de passômetro para médicos de CTI) ## //
 app.post("/gera_evolucao_cti", async (req, res) => {
   try {
-    const texto = req.body;
+    const { texto } = req.body;
 
     if (!texto) {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
