@@ -1031,3 +1031,88 @@ gere um JSON descrevendo a interação na propriedade "interação", como exempl
     res.status(500).json({ error: "Erro ao processar medicações." });
   }
 });
+
+// ## ENDPOINT PARA GERAR EVOLUÇÕES DE CTI (usada na aplicação de passômetro para médicos de CTI) ## //
+app.post("/gera_evolucao_cti", async (req, res) => {
+  try {
+    const { json } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt = `
+      Você é um médico intensivista experiente. Gere uma evolução médica completa de CTI, clara, objetiva e bem estruturada, pronta para ser copiada e colada em prontuário eletrônico.
+
+      Utilize linguagem técnica adequada, sem excesso de texto, mas com boa organização. Evite redundâncias.
+
+      Organize a evolução nos seguintes tópicos:
+
+      1. IDENTIFICAÇÃO:
+      - Nome (iniciais ou primeiro nome)
+      - Idade
+      - Data de entrada
+
+      2. DIAGNÓSTICOS:
+      - Listar os diagnósticos principais e secundários
+
+      3. HDA (História da Doença Atual):
+      - Resumir de forma objetiva
+
+      4. ANTECEDENTES:
+      - Incluir comorbidades, alergias, cirurgias prévias e internações relevantes
+
+      5. MEDICAÇÕES DE USO CONTÍNUO:
+      - Listar medicações domiciliares
+
+      6. DADOS VITAIS:
+      - Descrever sinais vitais de forma objetiva
+
+      7. SUPORTE VENTILATÓRIO:
+      - Descrever via aérea e parâmetros de ventilação mecânica (se houver)
+
+      8. INVASÕES:
+      - Listar acessos venosos, sondas e dispositivos
+
+      9. INFUSÕES:
+      - Listar drogas em infusão contínua com suas doses/taxas
+
+      10. ANTIBIOTICOTERAPIA:
+      - Descrever antibióticos em uso
+
+      11. CULTURAS:
+      - Informar resultados disponíveis ou pendentes
+
+      12. EXAME FÍSICO (GERAL):
+      - Gerar um exame físico objetivo com base nos dados disponíveis (se não houver dados, descrever como “sem alterações significativas”)
+
+      13. AVALIAÇÃO:
+      - Fazer uma síntese clínica do caso, com raciocínio médico
+
+      14. PROPOSTA/CONDUTA:
+      - Listar condutas de forma objetiva
+
+      Regras importantes:
+      - Se algum campo estiver vazio, omitir ou indicar como "não informado"
+      - Não inventar dados
+      - Manter linguagem médica padrão brasileira
+      - Usar frases curtas e objetivas
+
+      Dados do paciente em formato JSON:
+      ${{json}}
+    `;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const resposta = completion.choices[0].message.content;
+
+    res.json(JSON.parse(resposta));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar medicações." });
+  }
+});
