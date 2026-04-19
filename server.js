@@ -1037,7 +1037,7 @@ app.post("/gera_evolucao_cti", async (req, res) => {
   try {
     const { json } = req.body;
 
-    if (!texto) {
+    if (!json) {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
     }
 
