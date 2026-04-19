@@ -1035,9 +1035,9 @@ gere um JSON descrevendo a interação na propriedade "interação", como exempl
 // ## ENDPOINT PARA GERAR EVOLUÇÕES DE CTI (usada na aplicação de passômetro para médicos de CTI) ## //
 app.post("/gera_evolucao_cti", async (req, res) => {
   try {
-    const { json } = req.body;
+    const { texto } = req.body;
 
-    if (!json) {
+    if (!texto) {
       return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
     }
 
@@ -1099,7 +1099,7 @@ app.post("/gera_evolucao_cti", async (req, res) => {
       - Usar frases curtas e objetivas
 
       Dados do paciente em formato JSON:
-      ${{json}}
+      ${texto}
     `;
 
     const completion = await openai.chat.completions.create({
