@@ -1100,6 +1100,48 @@ app.post("/gera_evolucao_cti", async (req, res) => {
 
       Dados do paciente em formato JSON:
       ${texto}
+
+      IMPORTANTE: 
+      A resposta DEVE ser exclusivamente um JSON válido, sem qualquer texto antes ou depois.
+
+      O JSON DEVE seguir EXATAMENTE esta estrutura:
+
+      {
+        "identificacao": {
+          "nome": "",
+          "idade": "",
+          "data_entrada": ""
+        },
+        "diagnosticos": [],
+        "hda": "",
+        "antecedentes": "",
+        "medicacoes_uso_continuo": "",
+        "dados_vitais": "",
+        "suporte_ventilatorio": "",
+        "invasoes": "",
+        "infusoes": "",
+        "antibioticoterapia": "",
+        "culturas": "",
+        "exame_fisico": "",
+        "avaliacao": "",
+        "conduta": ""
+      }
+
+      Regras obrigatórias:
+      - NÃO adicionar campos extras
+      - NÃO remover campos
+      - TODOS os campos devem existir, mesmo que vazios ("")
+      - Listas devem ser arrays (ex: diagnosticos)
+      - NÃO incluir explicações fora do JSON
+      - NÃO usar markdown
+      - NÃO usar comentários
+
+      Regras clínicas:
+      - Linguagem médica padrão brasileira
+      - Objetivo e direto
+      - Não inventar informações
+      - Se dado não fornecido → preencher com "não informado"
+
     `;
 
     const completion = await openai.chat.completions.create({
