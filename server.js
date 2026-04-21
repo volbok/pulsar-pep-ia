@@ -1063,16 +1063,17 @@ app.post("/gera_evolucao_cti", async (req, res) => {
 
       ESTRUTURA OBRIGATÓRIA:
       1. identificação breve do paciente (texto)
-      2. resumo clínico (texto)
-      3. evolução recente (texto)
-      4. exame físico, infusões (texto)
-      5. invasões (array)
-      6. infusões  (array)
-      7. parâmetros da ventilação mecânica (tipo de via aérea, modo, peep, FI)
-      8. culturas (texto)
-      9. antibióticos em uso e respectivas datas de início (array)
-      10. avaliação (texto)
-      11. conduta (texto)
+      2. diagnósticos (array)
+      3. resumo clínico (texto)
+      4. evolução recente (texto)
+      5. exame físico (texto)
+      6. invasões (array)
+      7. infusões  (array)
+      8. parâmetros da ventilação mecânica (tipo de via aérea, modo, peep, FI)
+      9. culturas (texto)
+      10. antibióticos em uso e respectivas datas de início (array)
+      11. avaliação (texto)
+      12. conduta (texto)
 
       REGRAS:
       - Não usar listas excessivas
