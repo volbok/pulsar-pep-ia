@@ -1071,7 +1071,7 @@ app.post("/gera_evolucao_cti", async (req, res) => {
       7. exame físico (texto)
       8. invasões (array)
       9. infusões  (array)
-      10. parâmetros da ventilação mecânica (tipo de via aérea, modo, peep, FI)
+      10. parâmetros da ventilação mecânica (objeto com as propriedades "tipo de via aérea", "modo", "peep" e "fi")
       11. culturas (texto)
       12. antibióticos em uso e respectivas datas de início (array)
       13. avaliação (texto)
