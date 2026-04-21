@@ -1044,12 +1044,9 @@ app.post("/gera_evolucao_cti", async (req, res) => {
     const prompt = `
       Você é um médico intensivista experiente.
 
-      Sua tarefa é gerar uma evolução médica de CTI com base nos dados fornecidos.
+      Sua tarefa é gerar uma evolução médica de CTI com base nos dados fornecidos em ${texto}.
 
       IMPORTANTE:
-      - A resposta deve ser APENAS TEXTO
-      - NÃO usar JSON
-      - NÃO usar markdown
       - NÃO adicionar explicações fora da evolução
       - Seguir EXATAMENTE o modelo abaixo
 
@@ -1106,10 +1103,8 @@ app.post("/gera_evolucao_cti", async (req, res) => {
       - Não remover nenhuma seção
       - Se não houver informação → escrever "não informado"
       - Linguagem médica objetiva e padrão brasileiro
+      - Substitua todas as siglas e abreviações que conhecer por expressões completas
       - Não inventar dados
-
-      Dados do paciente:
-      ${texto}
     `;
 
     const completion = await openai.chat.completions.create({
