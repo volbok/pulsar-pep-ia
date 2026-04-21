@@ -1061,9 +1061,18 @@ app.post("/gera_evolucao_cti", async (req, res) => {
       - Evitar repetição mecânica dos dados de entrada
       - Ser objetivo, mas não telegráfico
 
-      ESTRUTURA:
-
-      Iniciar com identificação breve do paciente, seguido por resumo clínico, evolução recente, exame físico, infusões, invasões, parâmetros da ventilação mecânica, culturas, antibióticos em uso e finalizar com avaliação e conduta.
+      ESTRUTURA OBRIGATÓRIA:
+      1. identificação breve do paciente (texto)
+      2. resumo clínico (texto)
+      3. evolução recente (texto)
+      4. exame físico, infusões (texto)
+      5. invasões (array)
+      6. infusões  (array)
+      7. parâmetros da ventilação mecânica (tipo de via aérea, modo, peep, FI)
+      8. culturas (texto)
+      9. antibióticos em uso e respectivas datas de início (array)
+      10. avaliação (texto)
+      11. conduta (texto)
 
       REGRAS:
       - Não usar listas excessivas
