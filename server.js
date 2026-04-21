@@ -1042,61 +1042,71 @@ app.post("/gera_evolucao_cti", async (req, res) => {
     }
 
     const prompt = `
-      Você é um médico intensivista experiente. Gere uma evolução médica completa de CTI, clara, objetiva e bem estruturada, pronta para ser copiada e colada em prontuário eletrônico.
+      Você é um médico intensivista experiente.
+      
+      Sua tarefa é gerar uma evolução médica de CTI com base nos dados fornecidos.
 
-      Utilize linguagem técnica adequada, sem excesso de texto, mas com boa organização. Evite redundâncias.
+      IMPORTANTE:
+      - A resposta deve ser APENAS TEXTO
+      - NÃO usar JSON
+      - NÃO usar markdown
+      - NÃO adicionar explicações fora da evolução
+      - Seguir EXATAMENTE o modelo abaixo
 
-      Organize a evolução nos seguintes tópicos:
+      MODELO DE SAÍDA (OBRIGATÓRIO):
 
-      1. IDENTIFICAÇÃO:
-      - Nome (iniciais ou primeiro nome)
-      - Idade
-      - Data de entrada
+      IDENTIFICAÇÃO:
+      Nome: {nome}
+      Idade: {idade}
+      Data de entrada: {data}
 
-      2. DIAGNÓSTICOS:
-      - Listar os diagnósticos principais e secundários
+      DIAGNÓSTICOS:
+      - item 1
+      - item 2
 
-      3. HDA (História da Doença Atual):
-      - Resumir de forma objetiva
+      HDA:
+      texto
 
-      4. ANTECEDENTES:
-      - Incluir comorbidades, alergias, cirurgias prévias e internações relevantes
+      ANTECEDENTES:
+      texto
 
-      5. MEDICAÇÕES DE USO CONTÍNUO:
-      - Listar medicações domiciliares
+      MEDICAÇÕES DE USO CONTÍNUO:
+      texto
 
-      6. DADOS VITAIS:
-      - Descrever sinais vitais de forma objetiva
+      DADOS VITAIS:
+      texto
 
-      7. SUPORTE VENTILATÓRIO:
-      - Descrever via aérea e parâmetros de ventilação mecânica (se houver)
+      SUPORTE VENTILATÓRIO:
+      texto
 
-      8. INVASÕES:
-      - Listar acessos venosos, sondas e dispositivos
+      INVASÕES:
+      texto
 
-      9. INFUSÕES:
-      - Listar drogas em infusão contínua com suas doses/taxas
+      INFUSÕES:
+      texto
 
-      10. ANTIBIOTICOTERAPIA:
-      - Descrever antibióticos em uso
+      ANTIBIOTICOTERAPIA:
+      texto
 
-      11. CULTURAS:
-      - Informar resultados disponíveis ou pendentes
+      CULTURAS:
+      texto
 
-      12. EXAME FÍSICO (GERAL):
-      - Gerar um exame físico objetivo com base nos dados disponíveis (se não houver dados, descrever como “sem alterações significativas”)
+      EXAME FÍSICO:
+      texto
 
-      13. AVALIAÇÃO:
-      - Fazer uma síntese clínica do caso, com raciocínio médico
+      AVALIAÇÃO:
+      texto
 
-      14. PROPOSTA/CONDUTA:
-      - Listar condutas de forma objetiva
+      CONDUTA:
+      - item 1
+      - item 2
 
-      Regras importantes:
-      - Se algum campo estiver vazio, omitir ou indicar como "não informado"
+      REGRAS:
+      - Manter exatamente os títulos acima
+      - Não remover nenhuma seção
+      - Se não houver informação → escrever "não informado"
+      - Linguagem médica objetiva e padrão brasileiro
       - Não inventar dados
-      - Manter linguagem médica padrão brasileira
-      - Usar frases curtas e objetivas
 
       Dados do paciente em formato JSON:
       ${texto}
