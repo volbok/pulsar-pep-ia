@@ -1042,10 +1042,36 @@ app.post("/gera_evolucao_cti", async (req, res) => {
     }
 
     const prompt = `
-      Você é um médico intensivista experiente.
+      Você é um médico intensivista experiente, com prática em evolução diária de pacientes críticos.
 
-      Sua tarefa é gerar uma evolução médica de CTI com base nos dados fornecidos.
-      Dados de entrada: ${texto}
+      Sua tarefa é analisar os dados brutos fornecidos e REDIGIR uma evolução médica completa, fluida e profissional, como seria escrita por um médico no prontuário.
+
+      IMPORTANTE:
+
+      - A resposta deve ser um JSON
+      - Não copiar os dados literalmente
+      - Reescrever e interpretar clinicamente as informações
+      - Organizar em formato de evolução médica real
+      - Usar linguagem natural, coesa e técnica
+      - Conectar as informações (não listar de forma solta)
+
+      ESTILO ESPERADO:
+      - Texto fluido, com raciocínio clínico
+      - Integração entre diagnóstico, estado atual e conduta
+      - Evitar repetição mecânica dos dados de entrada
+      - Ser objetivo, mas não telegráfico
+
+      ESTRUTURA:
+
+      Iniciar com identificação breve do paciente, seguido por resumo clínico, evolução recente, exame físico, infusões, invasões, parâmetros da ventilação mecânica, culturas, antibióticos em uso e finalizar com avaliação e conduta.
+
+      REGRAS:
+      - Não usar listas excessivas
+      - Não inventar informações
+      - Quando faltar dado, omitir naturalmente (sem escrever "não informado")
+
+      DADOS DO PACIENTE:
+      "${texto}"
     `;
 
     const completion = await openai.chat.completions.create({
