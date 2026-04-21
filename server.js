@@ -1062,20 +1062,20 @@ app.post("/gera_evolucao_cti", async (req, res) => {
       - Ser objetivo, mas não telegráfico
 
       ESTRUTURA OBRIGATÓRIA:
-      1. identificação breve do paciente (texto)
-      2. diagnósticos (array)
-      3. antecedentes pessoais (texto)
-      4. medicações de uso prévio ou contínuo (texto)
-      5. resumo clínico (texto)
-      6. evolução recente (texto)
-      7. exame físico (texto)
-      8. invasões (array)
-      9. infusões  (array)
-      10. parâmetros da ventilação mecânica (objeto com as propriedades "tipo de via aérea", "modo", "peep" e "fi")
-      11. culturas (texto)
-      12. antibióticos em uso e respectivas datas de início (array)
-      13. avaliação (texto)
-      14. conduta (texto)
+      1. identificacao: identificação breve do paciente (texto)
+      2. diagnosticos: diagnósticos (array)
+      3. antecedentes_pessoais: antecedentes pessoais (texto)
+      4. muc: medicações de uso prévio ou contínuo (texto)
+      5. resumo_clinico: resumo clínico (texto)
+      6. evolucao: evolução recente (texto)
+      7. exame_fisico: exame físico (texto)
+      8. invasoes: invasões (array)
+      9. infusoes: infusões  (array)
+      10. vm: via aérea e parâmetros da ventilação mecânica (objeto com as propriedades "via_aérea", "modo", "peep" e "fi")
+      11. culturas: culturas (texto)
+      12. atb: antibióticos em uso e respectivas datas de início (array)
+      13. avaliacao: avaliação (texto)
+      14. conduta: conduta (texto)
 
       REGRAS:
       - Não usar listas excessivas
