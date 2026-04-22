@@ -1059,7 +1059,7 @@ app.post("/gera_evolucao_cti", async (req, res) => {
       - Texto fluido, com raciocínio clínico
       - Integração entre diagnóstico, estado atual e conduta
       - Evitar repetição mecânica dos dados de entrada
-      - Ser objetivo, mas não telegráfico
+      - Ser objetivo, resumir as informações em frases curtas, com descrições enxutas, sem justificativas ou explicações
 
       ESTRUTURA OBRIGATÓRIA:
       1. identificacao: identificação breve do paciente (texto)
