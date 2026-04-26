@@ -1100,3 +1100,49 @@ app.post("/gera_evolucao_cti", async (req, res) => {
     res.status(500).json({ error: "Erro ao processar medicações." });
   }
 });
+
+// endpoint que analisa imagem (foto de monitor multiparamétrico) e extrai dados vitais.
+app.post("/gera_dados_vitais", async (req, res) => {
+  const { imagem } = req.body;
+  const response = await openai.responses.create({
+    model: "gpt-4o-mini",
+    input: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text: `Você é um sistema de leitura de monitor multiparâmetros hospitalar.
+
+            Analise a imagem e extraia:
+            - Frequência cardíaca (FC)
+            - Frequência respiratória (FR)
+            - Saturação de oxigênio (SpO2)
+            - Pressão arterial sistólica e diastólica
+
+            Regras:
+            - Retorne apenas JSON válido
+            - Se não conseguir identificar um valor, retorne null
+            - Não invente valores
+
+            Formato:
+            {
+              "fc": number | null,
+              "fr": number | null,
+              "spo2": number | null,
+              "pa_sistolica": number | null,
+              "pa_diastolica": number | null
+            }`
+          },
+          {
+            type: "input_image",
+            image_url: `data:image/jpeg;base64,${imagem}`
+          }
+        ]
+      }
+    ]
+  });
+
+  return response.output_text;
+
+});
