@@ -1103,6 +1103,8 @@ app.post("/gera_evolucao_cti", async (req, res) => {
 
 // endpoint que analisa imagem (foto de monitor multiparamétrico) e extrai dados vitais.
 app.post("/gera_dados_vitais", async (req, res) => {
+  console.log(req.body);
+  console.log(req.body);
   const { imagem } = req.body;
   const response = await openai.responses.create({
     model: "gpt-4o-mini",
@@ -1136,7 +1138,7 @@ app.post("/gera_dados_vitais", async (req, res) => {
           },
           {
             type: "input_image",
-            image_url: `data:image/jpeg;base64,${imagem}`
+            image_url: imagem
           }
         ]
       }
