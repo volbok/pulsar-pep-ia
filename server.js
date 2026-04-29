@@ -5,7 +5,8 @@ import cors from "cors";
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.listen(3500, () => {
   console.log("Servidor rodando na porta 3500");
 });
@@ -1103,17 +1104,18 @@ app.post("/gera_evolucao_cti", async (req, res) => {
 
 // endpoint que analisa imagem (foto de monitor multiparamétrico) e extrai dados vitais.
 app.post("/gera_dados_vitais", async (req, res) => {
-  const { imagem } = req.body;
   console.log(req.body);
-  const response = await openai.responses.create({
-    model: "gpt-4o-mini",
-    input: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "input_text",
-            text: `Você é um sistema de leitura de monitor multiparâmetros hospitalar.
+  try {
+    const { imagem } = req.body;
+    const response = await openai.responses.create({
+      model: "gpt-4o-mini",
+      input: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text: `Você é um sistema de leitura de monitor multiparâmetros hospitalar.
 
             Analise a imagem e extraia:
             - Frequência cardíaca (FC)
@@ -1134,17 +1136,21 @@ app.post("/gera_dados_vitais", async (req, res) => {
               "pa_sistolica": number | null,
               "pa_diastolica": number | null
             }`
-          },
-          {
-            type: "input_image",
-            // image_url: "data:image/jpeg;base64" + imagem
-            image_url: imagem
-          }
-        ]
-      }
-    ]
-  });
-
-  return response.output_text;
+            },
+            {
+              type: "input_image",
+              // image_url: "data:image/jpeg;base64" + imagem
+              image_url: imagem
+            }
+          ]
+        }
+      ]
+    });
+    // console.log(response);
+    res.json(response.output_text);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar medicações." });
+  }
 
 });
