@@ -1124,7 +1124,7 @@ app.post("/gera_dados_vitais", async (req, res) => {
             - Pressão arterial sistólica e diastólica
 
             Regras:
-            - Retorne apenas JSON válido
+            - Retorne EXCLUSIVAMENTE um JSON válido, sem texto adcional, sem explicações.
             - Se não conseguir identificar um valor, retorne null
             - Não invente valores
 
@@ -1147,7 +1147,7 @@ app.post("/gera_dados_vitais", async (req, res) => {
       ]
     });
     // console.log(response);
-    res.json(response.output_text);
+    res.json(JSON.parse(response.output_text));
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erro ao processar medicações." });
