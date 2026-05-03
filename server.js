@@ -1115,27 +1115,36 @@ app.post("/gera_dados_vitais", async (req, res) => {
           content: [
             {
               type: "input_text",
-              text: `Você é um sistema de leitura de monitor multiparâmetros hospitalar.
+              text:
+                `
+              Você é um sistema de leitura de monitor multiparâmetros hospitalar.
 
-            Analise a imagem e extraia:
-            - Frequência cardíaca (FC)
-            - Frequência respiratória (FR)
-            - Saturação de oxigênio (SpO2)
-            - Pressão arterial sistólica e diastólica
+              Extraia os seguintes sinais vitais da imagem:
+              - fc (frequência cardíaca)
+              - fr (frequência respiratória)
+              - spo2 (saturação de oxigênio)
+              - pa_sistolica
+              - pa_diastolica
 
-            Regras:
-            - Retorne EXCLUSIVAMENTE um JSON válido, sem texto adcional, sem explicações.
-            - Se não conseguir identificar um valor, retorne null
-            - Não invente valores
+              Regras obrigatórias:
+              - Retorne APENAS um objeto JSON válido
+              - Não inclua explicações, comentários ou texto adicional
+              - Não use markdown, crases ou formatação
+              - Não retorne como string
+              - O JSON deve ser diretamente parseável por JSON.parse()
 
-            Formato:
-            {
-              "fc": number | null,
-              "fr": number | null,
-              "spo2": number | null,
-              "pa_sistolica": number | null,
-              "pa_diastolica": number | null
-            }`
+              Se algum valor não puder ser identificado, use null
+              Não invente valores
+
+              Formato exato esperado:
+              {
+                "fc": number | null,
+                "fr": number | null,
+                "spo2": number | null,
+                "pa_sistolica": number | null,
+                "pa_diastolica": number | null
+              }
+              `
             },
             {
               type: "input_image",
@@ -1146,7 +1155,7 @@ app.post("/gera_dados_vitais", async (req, res) => {
         }
       ]
     });
-    // console.log(response);
+    console.log(response);
     res.json(JSON.parse(response.output_text));
   } catch (error) {
     console.error(error);
