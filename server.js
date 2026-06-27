@@ -1065,6 +1065,37 @@ Entrada do usuário: "${texto}"
   }
 });
 
+app.post("/atestado", async (req, res) => {
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt = `
+Você é um assistente médico. Recebe um texto com informações sobre uma doença e a quantidade de dias de afastamento para um paciente.
+Escreva um atestado médico descrevendo o CID da doença e a quantidade de dias indicado para o afastamento do trabalho.
+Retorne um JSON estruturado conforme modelo abaixo:
+{
+data: DATA: DD/MM/YYYY - HORA: HH:MM
+texto: texto gerado
+}
+Entrada do usuário: "${texto}" 
+`;
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar evolução." });
+  }
+});
+
 // ## ENDPOINT PARA GERAR EVOLUÇÕES DE CTI (usada na aplicação de passômetro para médicos de CTI) ## //
 app.post("/gera_evolucao_cti", async (req, res) => {
   try {
