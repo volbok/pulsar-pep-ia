@@ -1033,6 +1033,38 @@ gere um JSON descrevendo a interação na propriedade "interação", como exempl
   }
 });
 
+app.post("/evolucao", async (req, res) => {
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({ error: "Campo 'texto' é obrigatório." });
+    }
+
+    const prompt = `
+Você é um assistente médico. Recebe um texto com dados de anamnese e evolução clínica de um paciente atendido em consultório, que pode
+incluir informações de antecedentes patológicos, alergias, medicações de uso contínuo, dados vitais, dados do exame físico e observações feitas por você.
+Melhore o texto, corrija erros ortográficos, converta siglas conhecidas em textos completos, Organize e distribua melhor as informações.
+Retorne um JSON estruturado conforme modelo abaixo:
+{
+data: DATA: DD/MM/YYYY - HORA: HH:MM
+texto: texto gerado
+}
+Entrada do usuário: "${texto}" 
+`;
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+    const resposta = completion.choices[0].message.content;
+    res.json(JSON.parse(resposta));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao processar evolução." });
+  }
+});
+
 // ## ENDPOINT PARA GERAR EVOLUÇÕES DE CTI (usada na aplicação de passômetro para médicos de CTI) ## //
 app.post("/gera_evolucao_cti", async (req, res) => {
   try {
